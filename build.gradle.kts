@@ -7,18 +7,25 @@
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin on the JVM.
     id("org.jetbrains.kotlin.jvm").version("1.3.31")
+    antlr
 }
 
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
-
+    mavenCentral()
 }
 
 dependencies {
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    // coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
+    
+    // https://mvnrepository.com/artifact/org.antlr/antlr4-runtime
+    implementation("org.antlr:antlr4-runtime:4.7.2")
+    antlr("org.antlr:antlr4:4.7.2") 
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
