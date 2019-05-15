@@ -11,7 +11,11 @@ public class ExpressionWalker extends ExpressionBaseListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override public void enterEveryRule(ParserRuleContext ctx) {
-        System.out.println(ctx.getText());
+        try {
+            System.out.println(ExpressionParser.ruleNames[ctx.getRuleIndex()] + "   " + ctx.getText());
+        } catch (Exception e) {
+            System.out.println("failed to get rule    " + ctx.getText());
+        }
     }
     /**
      * {@inheritDoc}

@@ -11,9 +11,11 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class Main {
     public static void main( String[] args) throws Exception
     {
-        ExpressionLexer lexer = new ExpressionLexer(CharStreams.fromString("3 * 4 ^ (2 + 2) ^ 2 * x + 3y"));
+        ExpressionLexer lexer = new ExpressionLexer(CharStreams.fromString("-sin3! * 4 ^ (2 + 2)! ^ 2 * x + 3y + 3 - 2"));
+        lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ExpressionParser parser = new ExpressionParser(tokens);
+        parser.addErrorListener(ThrowingErrorListener.INSTANCE);
         ParseTree tree = parser.expression();
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(new ExpressionWalker(), tree);

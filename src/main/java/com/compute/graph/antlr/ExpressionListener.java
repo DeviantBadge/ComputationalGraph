@@ -1,5 +1,8 @@
-// Generated from /Users/evgeny.vorobyev/workFolder/tech/sample/ComputationalGraph/src/main/resources/Expression.g4 by ANTLR 4.7.2
+// Generated from D:/User Files/Working Tree/LinFolder/SeriousProjects/MachineLearning/Basics/ComputationalGraph/src/main/resources\Expression.g4 by ANTLR 4.7.2
 package com.compute.graph.antlr;
+
+    import java.util.HashMap;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -48,15 +51,15 @@ public interface ExpressionListener extends ParseTreeListener {
 	 */
 	void exitFactor(ExpressionParser.FactorContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExpressionParser#signedAtom}.
+	 * Enter a parse tree produced by {@link ExpressionParser#composed_atom}.
 	 * @param ctx the parse tree
 	 */
-	void enterSignedAtom(ExpressionParser.SignedAtomContext ctx);
+	void enterComposed_atom(ExpressionParser.Composed_atomContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExpressionParser#signedAtom}.
+	 * Exit a parse tree produced by {@link ExpressionParser#composed_atom}.
 	 * @param ctx the parse tree
 	 */
-	void exitSignedAtom(ExpressionParser.SignedAtomContext ctx);
+	void exitComposed_atom(ExpressionParser.Composed_atomContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExpressionParser#atom}.
 	 * @param ctx the parse tree
@@ -68,15 +71,35 @@ public interface ExpressionListener extends ParseTreeListener {
 	 */
 	void exitAtom(ExpressionParser.AtomContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExpressionParser#scientific}.
+	 * Enter a parse tree produced by {@link ExpressionParser#expr_in_brackets}.
 	 * @param ctx the parse tree
 	 */
-	void enterScientific(ExpressionParser.ScientificContext ctx);
+	void enterExpr_in_brackets(ExpressionParser.Expr_in_bracketsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExpressionParser#scientific}.
+	 * Exit a parse tree produced by {@link ExpressionParser#expr_in_brackets}.
 	 * @param ctx the parse tree
 	 */
-	void exitScientific(ExpressionParser.ScientificContext ctx);
+	void exitExpr_in_brackets(ExpressionParser.Expr_in_bracketsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumber(ExpressionParser.NumberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumber(ExpressionParser.NumberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#special_constants}.
+	 * @param ctx the parse tree
+	 */
+	void enterSpecial_constants(ExpressionParser.Special_constantsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#special_constants}.
+	 * @param ctx the parse tree
+	 */
+	void exitSpecial_constants(ExpressionParser.Special_constantsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExpressionParser#variable}.
 	 * @param ctx the parse tree
@@ -88,13 +111,73 @@ public interface ExpressionListener extends ParseTreeListener {
 	 */
 	void exitVariable(ExpressionParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExpressionParser#relop}.
+	 * Enter a parse tree produced by {@link ExpressionParser#relops}.
 	 * @param ctx the parse tree
 	 */
-	void enterRelop(ExpressionParser.RelopContext ctx);
+	void enterRelops(ExpressionParser.RelopsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExpressionParser#relop}.
+	 * Exit a parse tree produced by {@link ExpressionParser#relops}.
 	 * @param ctx the parse tree
 	 */
-	void exitRelop(ExpressionParser.RelopContext ctx);
+	void exitRelops(ExpressionParser.RelopsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#lowest_priority}.
+	 * @param ctx the parse tree
+	 */
+	void enterLowest_priority(ExpressionParser.Lowest_priorityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#lowest_priority}.
+	 * @param ctx the parse tree
+	 */
+	void exitLowest_priority(ExpressionParser.Lowest_priorityContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#low_priority}.
+	 * @param ctx the parse tree
+	 */
+	void enterLow_priority(ExpressionParser.Low_priorityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#low_priority}.
+	 * @param ctx the parse tree
+	 */
+	void exitLow_priority(ExpressionParser.Low_priorityContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#middle_priority}.
+	 * @param ctx the parse tree
+	 */
+	void enterMiddle_priority(ExpressionParser.Middle_priorityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#middle_priority}.
+	 * @param ctx the parse tree
+	 */
+	void exitMiddle_priority(ExpressionParser.Middle_priorityContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#unary_left}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnary_left(ExpressionParser.Unary_leftContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#unary_left}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnary_left(ExpressionParser.Unary_leftContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#unary_right}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnary_right(ExpressionParser.Unary_rightContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#unary_right}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnary_right(ExpressionParser.Unary_rightContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#math_functions}.
+	 * @param ctx the parse tree
+	 */
+	void enterMath_functions(ExpressionParser.Math_functionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#math_functions}.
+	 * @param ctx the parse tree
+	 */
+	void exitMath_functions(ExpressionParser.Math_functionsContext ctx);
 }
