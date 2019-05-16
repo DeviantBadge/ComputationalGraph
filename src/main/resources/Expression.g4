@@ -1,25 +1,37 @@
 grammar Expression;
+// when changing this grammar file be shure, that nothing happens in StringExpressionGraphBuilder
+// todo mb use versions?
 
 @header {
     import java.util.HashMap;
 }
 
+@member {
+    private HashMap<String, String> hahaha;
+}
+
 // todo function system
-equation: expression relops expression;
-expression: term (lowest_priority term)*;
-term: factor (low_priority factor)*;
-factor: composed_atom (middle_priority composed_atom | atom)*;
+equation:
+    expression relops expression;
+expression:
+    term (lowest_priority term)*;
+term:
+    factor (low_priority factor | composed_atom)*;
+factor:
+    signed_composed_atom (middle_priority signed_composed_atom)*;
+
+signed_composed_atom:
+    unary_left signed_composed_atom
+    | composed_atom;
 
 composed_atom:
-    unary_left composed_atom
-    | math_functions composed_atom
+    lexem expr_in_brackets
     | atom;
 
 atom:
     atom unary_right
     | number
-    | special_constants
-    | variable
+    | lexem
     | expr_in_brackets;
 
 // todo add comma?
@@ -28,37 +40,35 @@ expr_in_brackets:
     | L_SQUARE_BR expression R_SQUARE_BR
     | L_FIGURE_BR expression R_FIGURE_BR
     | ABS_BR expression ABS_BR;
+//square_brackets:
+//    L_SQUARE_BR expression R_SQUARE_BR
+//figure_brackets
+//    L_FIGURE_BR expression R_FIGURE_BR
 
 number:
     SCIENTIFIC_NUMBER | FLOAT_NUMBER | INT_NUMBER;
-special_constants:
-    E_CONST | PI_CONST;
-variable:
-    VAR_NAME;
+lexem:
+    LEXEM;
 
-// todo mb remove?
-relops: EQ | GT | LT | GE | LE;
-GT: '>';
-LT: '<';
-GE: '>=';
-LE: '<=';
-EQ: '=';
+relops:
+    EQ | GT | LT | GE | LE;
+lowest_priority:
+    PLUS | MINUS;
+low_priority:
+    TIMES | DIV | DOT_OP;
+middle_priority:
+    POW;
 
-lowest_priority: PLUS | MINUS;
-low_priority: TIMES | DIV;
-middle_priority: POW;
+unary_left:
+    PLUS | MINUS;
+unary_right:
+    FACTORIAL;
 
-unary_left: PLUS | MINUS;
-unary_right: FACTORIAL;
-
-math_functions: MATH_RESERVED;
-
-MATH_RESERVED: CHARACTER_OR_DIGIT+ {getText().equals("sin")}?;
-VAR_NAME: CHARACTER+ CHARACTER_OR_DIGIT* {!getText().startsWith("sin")}?;
 
 INT_NUMBER: INT_NUMBER_F;
 FLOAT_NUMBER: FLOAT_NUMBER_F;
 SCIENTIFIC_NUMBER: FLOAT_NUMBER_F (E SIGN? INT_NUMBER_F)?;
+LEXEM: CHARACTER+ CHARACTER_OR_DIGIT*;
 
 
 // Brackets
@@ -70,6 +80,12 @@ L_FIGURE_BR: '{';
 R_FIGURE_BR: '}';
 ABS_BR: '|';
 
+// relation operations
+GT: '>';
+LT: '<';
+GE: '>=';
+LE: '<=';
+EQ: '=';
 
 // Operators
 PLUS: '+';
@@ -78,69 +94,8 @@ TIMES: '*';
 DIV: '/';
 POW: '^';
 // special operators
-DOT_OP: 'dot';
-DOT_CHAR: '.';
+DOT_OP: '.*';
 FACTORIAL: '!';
-
-// todo move everything to some array with names
-// Special constants
-E_CONST: 'e' | 'E';
-PI_CONST: 'pi' | 'Pi'| 'PI';
-
-// math special functions
-ABS: 'abs';
-SQRT: 'sqrt';
-CBRT: 'cbrt';
-EXP: 'exp';
-LOG: 'log';
-LN:  'ln';
-ERR:  'err';
-GAMMA:  'gamma';
-SIGMOID: 'sigmoid';
-SIGNUM: 'signum';
-
-//todo
-MAX: 'max';
-MIN: 'min';
-RANDOM: 'random';
-MEAN: 'mean';
-NORM: 'norm';
-SUM: 'sum';
-STD: 'std';
-
-
-COS:  'cos';
-COSH: 'cosh';
-SIN:  'sin';
-SINH: 'sinh';
-TAN:  'tan';
-TANH: 'tanh';
-CTAN: 'ctan';
-CTANH:'ctanh';
-
-ACOS: 'acos';
-ARCCOS: 'arccos';
-ASIN: 'asin';
-ARCSIN: 'arcsin';
-
-ACOSH: 'acosh';
-ARCCOSH: 'arccosh';
-ASINH: 'asinh';
-ARCSINH: 'arcsinh';
-
-ATAN: 'atan';
-ARCTAN: 'arctan';
-ATG:  'atg';
-ARCTG:  'arctg';
-ARCCTAN: 'arcctan';
-ARCCTG:  'arcctg';
-
-ATANH: 'atanh';
-ARCTANH: 'arctanh';
-ATGH:  'atgh';
-ARCTGH:  'arctgh';
-ARCCTANH: 'arcctanh';
-ARCCTGH:  'arcctgh';
 
 
 //The integer part gets its potential sign from the signedAtom rule
@@ -154,7 +109,6 @@ fragment DOT_CHAR_F: '.';
 // Technical fragments
 fragment INT_NUMBER_F: DIGIT+ ;
 fragment FLOAT_NUMBER_F: DIGIT+ DOT_CHAR_F DIGIT;
-
 
 
 WS:

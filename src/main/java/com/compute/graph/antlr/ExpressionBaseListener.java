@@ -1,4 +1,4 @@
-// Generated from D:/User Files/Working Tree/LinFolder/SeriousProjects/MachineLearning/Basics/ComputationalGraph/src/main/resources\Expression.g4 by ANTLR 4.7.2
+// Generated from /Users/evgeny.vorobyev/workFolder/tech/sample/ComputationalGraph/src/main/resources/Expression.g4 by ANTLR 4.7.2
 package com.compute.graph.antlr;
 
     import java.util.HashMap;
@@ -67,6 +67,18 @@ public class ExpressionBaseListener implements ExpressionListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSigned_composed_atom(ExpressionParser.Signed_composed_atomContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSigned_composed_atom(ExpressionParser.Signed_composed_atomContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterComposed_atom(ExpressionParser.Composed_atomContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -115,25 +127,13 @@ public class ExpressionBaseListener implements ExpressionListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSpecial_constants(ExpressionParser.Special_constantsContext ctx) { }
+	@Override public void enterLexem(ExpressionParser.LexemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSpecial_constants(ExpressionParser.Special_constantsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVariable(ExpressionParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVariable(ExpressionParser.VariableContext ctx) { }
+	@Override public void exitLexem(ExpressionParser.LexemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -206,18 +206,6 @@ public class ExpressionBaseListener implements ExpressionListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnary_right(ExpressionParser.Unary_rightContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMath_functions(ExpressionParser.Math_functionsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMath_functions(ExpressionParser.Math_functionsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

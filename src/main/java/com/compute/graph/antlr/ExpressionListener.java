@@ -1,4 +1,4 @@
-// Generated from D:/User Files/Working Tree/LinFolder/SeriousProjects/MachineLearning/Basics/ComputationalGraph/src/main/resources\Expression.g4 by ANTLR 4.7.2
+// Generated from /Users/evgeny.vorobyev/workFolder/tech/sample/ComputationalGraph/src/main/resources/Expression.g4 by ANTLR 4.7.2
 package com.compute.graph.antlr;
 
     import java.util.HashMap;
@@ -51,6 +51,16 @@ public interface ExpressionListener extends ParseTreeListener {
 	 */
 	void exitFactor(ExpressionParser.FactorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExpressionParser#signed_composed_atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterSigned_composed_atom(ExpressionParser.Signed_composed_atomContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExpressionParser#signed_composed_atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitSigned_composed_atom(ExpressionParser.Signed_composed_atomContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExpressionParser#composed_atom}.
 	 * @param ctx the parse tree
 	 */
@@ -91,25 +101,15 @@ public interface ExpressionListener extends ParseTreeListener {
 	 */
 	void exitNumber(ExpressionParser.NumberContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExpressionParser#special_constants}.
+	 * Enter a parse tree produced by {@link ExpressionParser#lexem}.
 	 * @param ctx the parse tree
 	 */
-	void enterSpecial_constants(ExpressionParser.Special_constantsContext ctx);
+	void enterLexem(ExpressionParser.LexemContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExpressionParser#special_constants}.
+	 * Exit a parse tree produced by {@link ExpressionParser#lexem}.
 	 * @param ctx the parse tree
 	 */
-	void exitSpecial_constants(ExpressionParser.Special_constantsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExpressionParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariable(ExpressionParser.VariableContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExpressionParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariable(ExpressionParser.VariableContext ctx);
+	void exitLexem(ExpressionParser.LexemContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExpressionParser#relops}.
 	 * @param ctx the parse tree
@@ -170,14 +170,4 @@ public interface ExpressionListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnary_right(ExpressionParser.Unary_rightContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExpressionParser#math_functions}.
-	 * @param ctx the parse tree
-	 */
-	void enterMath_functions(ExpressionParser.Math_functionsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExpressionParser#math_functions}.
-	 * @param ctx the parse tree
-	 */
-	void exitMath_functions(ExpressionParser.Math_functionsContext ctx);
 }
