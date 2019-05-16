@@ -7,13 +7,15 @@ import com.compute.graph.operation.interfaces.ExecutionResult
 import com.compute.graph.operation.interfaces.ExpressionArgs
 import com.compute.graph.operation.interfaces.PropertyHolder
 
-class SumOp : Operator() {
+class SubOp : Operator() {
 
     override val mutableParents: MutableList<TransformableExpression> = mutableListOf()
     override val mutableChildren: MutableList<TransformableExpression> = mutableListOf()
 
+    // todo create extension for execution result, that will handle operations
+    // todo validation
     override fun compute(args: ExpressionArgs): ExecutionResult {
-        TODO("Need implement execution result")
+        return SimpleResult(mutableChildren[0].compute(args).result - mutableChildren[1].compute(args).result)
     }
 
     override fun differentiate() {

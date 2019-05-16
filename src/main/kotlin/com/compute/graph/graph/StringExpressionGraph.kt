@@ -48,7 +48,7 @@ object StringExpressionGraphBuilder {
         return build(parser.expression())
     }
 
-    fun build(parseTree: ParseTree): StringExpressionGraph {
+    internal fun build(parseTree: ParseTree): StringExpressionGraph {
         if (parseTree is ErrorNode) {
             throw IllegalStateException("There was some error node in parsed tree - ${parseTree.text}")
         } else if (parseTree is TerminalNode) {
