@@ -1,5 +1,5 @@
 package com.compute.graph.operation.interfaces
 
-interface ExecutionResult {
+interface Result {
     val result: Double
 }

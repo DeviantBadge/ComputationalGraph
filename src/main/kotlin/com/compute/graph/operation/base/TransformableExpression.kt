@@ -4,11 +4,21 @@ import com.compute.graph.operation.interfaces.Expression
 import com.compute.graph.operation.interfaces.Transformable
 
 abstract class TransformableExpression: Expression, Transformable {
-    override val children: List<Expression>
+    final override val children: List<Expression>
         get() = mutableChildren
-    override val parents: List<Expression>
+    final override val parents: List<Expression>
         get() = mutableParents
 
     protected abstract val mutableParents: MutableList<TransformableExpression>
     protected abstract val mutableChildren: MutableList<TransformableExpression>
+
+    fun addChild(child: TransformableExpression) {
+        mutableChildren.add(child)
+        child.addParent(this)
+    }
+
+    fun addParent(parent: TransformableExpression) {
+        if (mutableParents.contains(parent))
+            mutableParents.add(parent)
+    }
 }

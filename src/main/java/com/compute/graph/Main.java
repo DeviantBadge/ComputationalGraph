@@ -9,8 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Main {
-    public static void main( String[] args) throws Exception
-    {
+    public static void main( String[] args) {
         ExpressionLexer lexer = new ExpressionLexer(CharStreams.fromString("-sin 3! * 4 ^ (2 + 2)! ^ 2x * x1 + 3y + 3 - 2"));
         lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

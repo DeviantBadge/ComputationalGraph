@@ -1,19 +1,17 @@
-package com.compute.graph.operation.objects
+package com.compute.graph.operation.objects.operators
 
-import com.compute.graph.operation.base.OperationType
 import com.compute.graph.operation.base.Operator
 import com.compute.graph.operation.base.TransformableExpression
-import com.compute.graph.operation.interfaces.ExecutionResult
 import com.compute.graph.operation.interfaces.ExpressionArgs
-import com.compute.graph.operation.interfaces.PropertyHolder
+import kotlinx.coroutines.internal.artificialFrame
 
-class SumOp : Operator() {
+class DivOp : Operator() {
 
     override val mutableParents: MutableList<TransformableExpression> = mutableListOf()
     override val mutableChildren: MutableList<TransformableExpression> = mutableListOf()
 
-    override fun compute(args: ExpressionArgs): ExecutionResult {
-        TODO("Need implement execution result")
+    override fun compute(args: ExpressionArgs): Double {
+        return children[0].compute(args) / children[1].compute(args)
     }
 
     override fun differentiate() {

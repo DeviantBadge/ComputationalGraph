@@ -94,7 +94,10 @@ class StringExpressionGraphListener : ExpressionBaseListener() {
             if (subtract.isNotEmpty()) {
                 val newResult = StringExpressionGraph("-")
                 newResult.addChild(result)
-                newResult.addChild(StringExpressionGraph("+", newResult, subtract))
+                if (subtract.size == 1)
+                    newResult.addChild(subtract.first())
+                else
+                    newResult.addChild(StringExpressionGraph("+", newResult, subtract))
                 result = newResult
             }
         }
