@@ -44,19 +44,19 @@ class ExpressionBuilder {
     fun build(stringGraph: StringExpressionGraph): TransformableExpression {
         val res = when {
             stringGraph.value in operators ->
-                operators.getValue(stringGraph.value).invoke()
+                operators.getValue(stringGraph.value).invoke(build(stringGraph.children[0]), build(stringGraph.children[1]))
             stringGraph.value in functions ->
-                functions.getValue(stringGraph.value).invoke()
+                functions.getValue(stringGraph.value).invoke(build(stringGraph.children[0]))
             stringGraph.value.toDoubleOrNull() != null ->
                 ScalarConstant(stringGraph.value.toDouble())
             stringGraph.value in variables ->
                 variables.getValue(stringGraph.value)
             else -> {
-                ScalarVariable(stringGraph.value).also { variables[stringGraph.value] = it }
+                ScalarVariable(stringGraph.value).also {
+                    variables[stringGraph.value] = it
+                }
             }
         }
-        for (child in stringGraph.children)
-            res.addChild(build(child))
         return res
     }
 }

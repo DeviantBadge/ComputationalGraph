@@ -28,7 +28,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
-    
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+//    implementation("org.springframework:spring-context:5.1.7.RELEASE")
+
+
     // https://mvnrepository.com/artifact/org.antlr/antlr4-runtime
     implementation("org.antlr:antlr4-runtime:4.7.2")
     antlr("org.antlr:antlr4:4.7.2") 

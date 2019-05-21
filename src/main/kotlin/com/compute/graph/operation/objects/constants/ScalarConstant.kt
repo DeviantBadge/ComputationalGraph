@@ -1,13 +1,13 @@
 package com.compute.graph.operation.objects.constants
 
+import com.compute.graph.operation.base.IndependentOperation
 import com.compute.graph.operation.base.TransformableExpression
 import com.compute.graph.operation.interfaces.ExpressionArgs
 import java.lang.IllegalArgumentException
 
-class ScalarConstant(private val value: Double) : TransformableExpression() {
-
-    override val mutableParents: MutableList<TransformableExpression> = mutableListOf()
-    override val mutableChildren: MutableList<TransformableExpression> = mutableListOf()
+class ScalarConstant(
+        private val value: Double
+) : IndependentOperation() {
 
     override fun compute(args: ExpressionArgs): Double {
         return value
