@@ -3,12 +3,13 @@ package com.compute.graph.operation.objects.functions
 import com.compute.graph.operation.base.TransformableExpression
 import com.compute.graph.operation.base.UnaryOperation
 import com.compute.graph.operation.interfaces.ExpressionArgs
+import org.springframework.stereotype.Component
 import kotlin.math.sin
 
+@Component
 class SinFunction(
         argument: TransformableExpression
 ) : UnaryOperation(argument) {
-
 
     override fun compute(args: ExpressionArgs): Double {
         return sin(children[0].compute(args))

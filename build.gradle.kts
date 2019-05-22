@@ -28,9 +28,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
+    // kotlin reflection
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.31")
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context
-//    implementation("org.springframework:spring-context:5.1.7.RELEASE")
+    implementation("org.springframework:spring-context:5.1.7.RELEASE")
+    // scanners do not know what is better
+    implementation("org.reflections:reflections:0.9.11")
+    implementation("io.github.classgraph:classgraph:4.8.37")
 
 
     // https://mvnrepository.com/artifact/org.antlr/antlr4-runtime
