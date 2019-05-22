@@ -9,6 +9,7 @@ class SinFunction(
         argument: TransformableExpression
 ) : UnaryOperation(argument) {
 
+
     override fun compute(args: ExpressionArgs): Double {
         return sin(children[0].compute(args))
     }

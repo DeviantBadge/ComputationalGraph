@@ -1,14 +1,11 @@
 package com.compute.graph.operation.base
 
 /**
- * <p>Description:</P>
- * <p>Company:Alibaba</p>
  * @Author: evgeny.vorobyev
  * @Since: 1.0
- * @Version:1.0,Date:2019-05-21
+ * @Version:1.0,Date:2019-05-22
  */
-
-abstract class IndependentOperation: TransformableExpression()  {
+abstract class IndependentOperand: TransformableExpression()  {
     final override val children: List<TransformableExpression>
         get() = listOf()
 }

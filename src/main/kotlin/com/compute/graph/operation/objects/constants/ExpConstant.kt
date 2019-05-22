@@ -5,13 +5,12 @@ import com.compute.graph.operation.base.IndependentOperation
 import com.compute.graph.operation.base.TransformableExpression
 import com.compute.graph.operation.interfaces.ExpressionArgs
 import java.lang.IllegalArgumentException
+import kotlin.math.E
+import kotlin.math.PI
 
-open class ScalarConstant(
-        private val value: Double
-) : IndependentOperand() {
-
-    override fun compute(args: ExpressionArgs): Double {
-        return value
+class ExpConstant : ScalarConstant(E) {
+    companion object {
+        val names = listOf("e", "exp")
     }
 
     override fun differentiate() {
@@ -19,6 +18,6 @@ open class ScalarConstant(
     }
 
     override fun toString(): String {
-        return value.toString()
+        return "e"
     }
 }

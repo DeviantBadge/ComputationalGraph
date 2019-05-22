@@ -5,13 +5,11 @@ import com.compute.graph.operation.base.IndependentOperation
 import com.compute.graph.operation.base.TransformableExpression
 import com.compute.graph.operation.interfaces.ExpressionArgs
 import java.lang.IllegalArgumentException
+import kotlin.math.PI
 
-open class ScalarConstant(
-        private val value: Double
-) : IndependentOperand() {
-
-    override fun compute(args: ExpressionArgs): Double {
-        return value
+class PiConstant : ScalarConstant(PI) {
+    companion object {
+        val names = listOf("pi", "Pi")
     }
 
     override fun differentiate() {
@@ -19,6 +17,6 @@ open class ScalarConstant(
     }
 
     override fun toString(): String {
-        return value.toString()
+        return "π"
     }
 }
