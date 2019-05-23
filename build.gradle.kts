@@ -31,6 +31,13 @@ dependencies {
     // kotlin reflection
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.31")
 
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation("org.slf4j:slf4j-api:1.7.26")
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation("org.slf4j:slf4j-simple:1.7.26")
+
+
+
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     implementation("org.springframework:spring-context:5.1.7.RELEASE")
     // scanners do not know what is better
@@ -41,7 +48,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.antlr/antlr4-runtime
     implementation("org.antlr:antlr4-runtime:4.7.2")
-    antlr("org.antlr:antlr4:4.7.2") 
+    antlr("org.antlr:antlr4:4.7.2")
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")

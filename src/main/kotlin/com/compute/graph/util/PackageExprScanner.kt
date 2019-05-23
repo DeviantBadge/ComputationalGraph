@@ -1,6 +1,13 @@
 package com.compute.graph.util
 
+import com.sun.deploy.util.ArrayUtil
+import com.sun.tools.javac.util.ArrayUtils
+import io.github.classgraph.ClassGraph
+import io.github.classgraph.ClassInfo
 import io.github.classgraph.ClassInfoList
+import io.github.classgraph.ScanResult
+import java.lang.Exception
+import java.util.*
 
 /**
  * @Author: evgeny.vorobyev
@@ -14,8 +21,19 @@ object PackageExprScanner {
             annotations: List<String> = listOf(),
             implementedInterfaces: List<String> = listOf(),
             extendsClasses: List<String> = listOf()
-    ) {
-
+    ): ClassInfoList {
+        ClassGraph()
+                    .verbose()
+                    .enableAllInfo()
+                    .whitelistPackages(*packages.toTypedArray())
+                    .scan()
+                .use {
+                    return it.allClasses.filter{classInfo ->
+                        annotations.all {annotationName -> classInfo.hasAnnotation(annotationName) }
+                                && implementedInterfaces.all { interfaceName -> classInfo.implementsInterface(interfaceName) }
+                                && extendsClasses.all { interfaceName -> classInfo.implementsInterface(interfaceName) }
+                    }
+                }
     }
 
     fun scanPackages(packages: List<Package>) =

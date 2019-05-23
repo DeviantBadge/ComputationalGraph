@@ -4,6 +4,7 @@ import com.compute.graph.antlr.ExpressionBaseListener
 import com.compute.graph.antlr.ExpressionParser
 import com.compute.graph.graph.StringExpressionGraph
 import com.compute.graph.graph.StringExpressionGraphBuilder
+import com.compute.graph.operation.annotations.ExpressionGraphPart
 import com.compute.graph.operation.base.TransformableExpression
 import com.compute.graph.operation.objects.variables.ScalarVariable
 import com.compute.graph.operation.objects.arguments.ScalarArguments
@@ -13,10 +14,16 @@ import com.compute.graph.operation.objects.operators.DivOp
 import com.compute.graph.operation.objects.operators.MulOp
 import com.compute.graph.operation.objects.operators.SubOp
 import com.compute.graph.operation.objects.operators.SumOp
+import com.compute.graph.util.PackageExprScanner
+import io.github.classgraph.ClassInfo
 import org.antlr.v4.runtime.tree.*
 import java.lang.IllegalStateException
 
 class ExpressionBuilder {
+    init {
+
+    }
+
     private val variables: MutableMap<String, ScalarVariable> = hashMapOf()
 
     // todo automate it - spring context in operators package
@@ -58,6 +65,19 @@ class ExpressionBuilder {
             }
         }
         return res
+    }
+
+    fun scanForOperands(packages: List<String>) {
+        PackageExprScanner.scanPackages(
+                packages = listOf(""),
+                annotations = listOf(ExpressionGraphPart::class.java.canonicalName),
+                extendsClasses = listOf(TransformableExpression::class.java.canonicalName)
+        ).forEach(this::processClass)
+    }
+
+    private fun processClass(clazz: ClassInfo) {
+        if (clazz.hasAnnotation(Function::class.java.canonicalName))
+
     }
 }
 

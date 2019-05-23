@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
  * @Since: 1.0
  * @Version:1.0,Date:2019-05-21
  */
-abstract class TernaryOperation(
+abstract class TernarOperation(
         leftArgument: TransformableExpression,
         middleArgument: TransformableExpression,
         rightArgument: TransformableExpression
