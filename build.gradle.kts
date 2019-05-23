@@ -36,6 +36,7 @@ dependencies {
     // scanners do not know what is better
     implementation("org.reflections:reflections:0.9.11")
     implementation("io.github.classgraph:classgraph:4.8.37")
+    implementation("org.jooq:joor-java-8:0.9.7")
 
 
     // https://mvnrepository.com/artifact/org.antlr/antlr4-runtime

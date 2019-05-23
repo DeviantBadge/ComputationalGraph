@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component
 
 @Component
 @ExprConstant
-class SumOp(
+class SumOp1(
         leftArgument: TransformableExpression,
         rightArgument: TransformableExpression
 ) : BinaryOperation(leftArgument, rightArgument) {
+    constructor(vararg children: TransformableExpression): this(children[0], children[1])
 
     override fun compute(args: ExpressionArgs): Double {
         return children.fold(0.0) { sum, element -> sum + element.compute(args)}
