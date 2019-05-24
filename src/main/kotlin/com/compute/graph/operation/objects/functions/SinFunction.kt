@@ -1,14 +1,14 @@
 package com.compute.graph.operation.objects.functions
 
-import com.compute.graph.operation.base.TransformableExpression
+import com.compute.graph.operation.annotations.Function
+import com.compute.graph.operation.base.MathExpression
 import com.compute.graph.operation.base.UnaryOperation
 import com.compute.graph.operation.interfaces.ExpressionArgs
-import org.springframework.stereotype.Component
 import kotlin.math.sin
 
-@Component
+@Function("sin")
 class SinFunction(
-        argument: TransformableExpression
+        argument: MathExpression
 ) : UnaryOperation(argument) {
 
     override fun compute(args: ExpressionArgs): Double {

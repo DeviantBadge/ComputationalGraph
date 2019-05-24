@@ -3,6 +3,7 @@ package com.compute.graph.operation.objects.operators
 import com.compute.graph.operation.annotations.ExpressionGraphPart
 import com.compute.graph.operation.base.BinaryOperation
 import com.compute.graph.operation.base.TransformableExpression
+import com.compute.graph.operation.base.builders.BaseBuilder
 import io.github.classgraph.ClassGraph
 import org.reflections.Reflections
 import org.springframework.stereotype.Component
@@ -15,8 +16,7 @@ import kotlin.system.measureTimeMillis
  * @Since: 1.0
  * @Version:1.0,Date:2019-05-21
  */
-object OperatorBuilder {
-}
+object OperatorBuilder: BaseBuilder()
 
 
 
@@ -31,7 +31,7 @@ fun main() {
     }.also { println(it) }
 
     println()
-    println(SumOp1::class.java.constructors.map { it.parameters.joinToString(postfix = "\n") }.joinToString())
+//    println(SumOp1::class.java.constructors.map { it.parameters.joinToString(postfix = "\n") }.joinToString())
     println()
 
     measureTimeMillis {

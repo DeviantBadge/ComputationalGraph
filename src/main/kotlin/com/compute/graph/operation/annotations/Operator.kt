@@ -4,5 +4,5 @@ package com.compute.graph.operation.annotations
 @Retention(AnnotationRetention.RUNTIME)
 @ExpressionGraphPart
 annotation class Operator (
-        val names: Array<String> = []
+        vararg val names: String = []
 )

@@ -11,25 +11,25 @@ import kotlin.reflect.KProperty
  * @Version:1.0,Date:2019-05-21
  */
 
-final class TransformableDelegate (
-        private val parent: TransformableExpression,
-        private var delegated: TransformableExpression
+final class TransformableDelegate<T: TransformableExpression> (
+        private val parent: T,
+        private var delegated: T
 ){
     init {
         delegated.addParent(parent)
     }
 
     operator fun getValue(
-            thisRef: TransformableExpression,
+            thisRef: T,
             property: KProperty<*>
-    ): TransformableExpression {
+    ): T {
         return delegated
     }
 
     operator fun setValue(
-            thisRef: TransformableExpression,
+            thisRef: T,
             property: KProperty<*>,
-            value: TransformableExpression) {
+            value: T) {
         delegated.removeParent(thisRef)
         delegated = value
         value.addParent(thisRef)

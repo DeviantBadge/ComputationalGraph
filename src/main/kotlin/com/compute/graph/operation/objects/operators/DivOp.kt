@@ -1,12 +1,14 @@
 package com.compute.graph.operation.objects.operators
 
+import com.compute.graph.operation.annotations.Operator
 import com.compute.graph.operation.base.BinaryOperation
-import com.compute.graph.operation.base.TransformableExpression
+import com.compute.graph.operation.base.MathExpression
 import com.compute.graph.operation.interfaces.ExpressionArgs
 
+@Operator("/")
 class DivOp(
-        leftArgument: TransformableExpression,
-        rightArgument: TransformableExpression
+        leftArgument: MathExpression,
+        rightArgument: MathExpression
 ) : BinaryOperation(leftArgument, rightArgument) {
 
     override fun compute(args: ExpressionArgs): Double {

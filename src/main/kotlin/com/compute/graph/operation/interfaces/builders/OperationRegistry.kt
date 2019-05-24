@@ -1,7 +1,19 @@
 package com.compute.graph.operation.interfaces.builders
 
+import com.compute.graph.operation.base.BinaryOperation
+import com.compute.graph.operation.base.IndependentOperand
+import com.compute.graph.operation.base.IndependentOperation
+import com.compute.graph.operation.base.MathExpression
+import com.compute.graph.operation.base.TernaryOperation
 import com.compute.graph.operation.base.TransformableExpression
+import com.compute.graph.operation.base.UnaryOperation
+import com.compute.graph.operation.base.VectorOperation
+import com.compute.graph.util.SealedHelper
 import com.compute.graph.util.extensions.logger
+import org.joor.Reflect
+import java.lang.IllegalArgumentException
+import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
 
 /**
  * @Author: evgeny.vorobyev
@@ -10,21 +22,29 @@ import com.compute.graph.util.extensions.logger
  * @Date:2019-05-23
  */
 interface OperationRegistry {
-    val registered: MutableMap<String, Class<out TransformableExpression>>
+
+    val registeredNames: Set<String>
+
+    fun isRegistered(name: String): Boolean =
+            registeredNames.contains(name)
 
     fun register(
             names: List<String>,
-            clazz: Class<out TransformableExpression>
-    ) =
-            names.forEach { name ->
-                val hidden = registered.put(name, clazz)
-                        ?: return@register
-                logger().warn("New object '${clazz.name}' hides previous one '${hidden.name}' for name '$name'")
-            }
+            clazz: Class<out MathExpression>
+    )
 
     fun register(
-            names: Array<String>,
-            clazz: Class<out TransformableExpression>
-    ) =
-            register(names.toList(), clazz)
+            vararg names: String,
+            clazz: Class<out MathExpression>
+    ) = register(names.toList(), clazz)
+
+    fun register(
+            names: List<String>,
+            clazz: KClass<out MathExpression>
+    ) = register(names, clazz.java)
+
+    fun register(
+            vararg names: String,
+            clazz: KClass<out MathExpression>
+    ) = register(names.toList(), clazz.java)
 }

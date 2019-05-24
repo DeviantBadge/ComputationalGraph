@@ -1,11 +1,10 @@
 package com.compute.graph.operation.objects.constants
 
+import com.compute.graph.operation.annotations.Constant
 import kotlin.math.E
 
+@Constant("e", "exp")
 class ExpConstant : ScalarConstant(E) {
-    companion object {
-        val names = listOf("e", "exp")
-    }
 
     override fun differentiate() {
         TODO("Function \"${javaClass.name}.differentiate\" not implemented")
