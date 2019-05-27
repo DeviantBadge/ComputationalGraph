@@ -13,20 +13,13 @@ import com.compute.graph.operation.objects.constants.ScalarConstant
 import javax.naming.OperationNotSupportedException
 import kotlin.reflect.KClass
 
-/**
- * <p>Description:</P>
- * <p>Company:Alibaba</p>
- * @Author: evgeny.vorobyev
- * @Since: 1.0
- * @Version:1.0,Date:2019-05-21
- */
 class VariableBuilder: OperationBuilder {
     private var variables: MutableMap<String, IndependentOperand> = hashMapOf()
 
     override fun <T : MathExpression> build(
             exprType: KClass<T>,
             name: String,
-            vararg arguments: MathExpression
+            vararg arguments: Any
     ): T {
         throw OperationNotSupportedException("Cant build operations in variable builder")
     }
@@ -64,13 +57,6 @@ class VariableBuilder: OperationBuilder {
             middleArgument: MathExpression,
             rightArgument: MathExpression
     ): TernaryOperation {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
-    }
-
-    override fun buildVectorOperation(
-            name: String,
-            vararg arguments: MathExpression
-    ): VectorOperation {
         throw OperationNotSupportedException("Cant build operations in variable builder")
     }
 

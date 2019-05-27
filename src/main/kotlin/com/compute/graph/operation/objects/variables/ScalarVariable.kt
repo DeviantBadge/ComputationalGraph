@@ -17,9 +17,8 @@ class ScalarVariable(
                 "It contains only ${args.names.joinToString(prefix = "[", postfix = "]")}")
     }
 
-    override fun differentiate() {
-        TODO("Function \"${javaClass.name}.differentiate\" not implemented")
-    }
+    override fun differentiate(varName: String, args: ExpressionArgs): Double =
+            if (name == varName) 1.0 else 0.0
 
     override fun toString(): String {
         return name

@@ -30,12 +30,17 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     // kotlin reflection
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.31")
+    // https://mvnrepository.com/artifact/cglib/cglib
+    implementation("cglib:cglib:3.2.12")
+
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation("org.slf4j:slf4j-api:1.7.26")
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     implementation("org.slf4j:slf4j-simple:1.7.26")
 
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+    implementation("org.apache.commons:commons-math3:3.6.1")
 
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context

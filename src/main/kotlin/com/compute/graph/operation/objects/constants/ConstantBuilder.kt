@@ -9,6 +9,7 @@ import com.compute.graph.operation.base.UnaryOperation
 import com.compute.graph.operation.base.VectorOperation
 import com.compute.graph.operation.base.builders.BaseBuilder
 import javax.naming.OperationNotSupportedException
+import kotlin.reflect.KClass
 
 /**
  * <p>Description:</P>
@@ -61,32 +62,12 @@ object ConstantBuilder : BaseBuilder() {
 
     override fun buildVectorOperation(
             name: String,
-            vararg arguments: MathExpression
-    ): VectorOperation {
-        throw OperationNotSupportedException("Cant build operations in constants builder")
-    }
-
-    override fun buildVectorOperation(
-            name: String,
             arguments: List<MathExpression>
     ): VectorOperation {
         throw OperationNotSupportedException("Cant build operations in constants builder")
     }
+
+    override fun isRegistered(name: String): Boolean {
+        return (name.toDoubleOrNull() != null) || super.isRegistered(name)
+    }
 }
-//
-//open class a
-//open class b: a()
-//open class c: b()
-//
-//fun main() {
-//    val class1: Class<out a> = c::class.java
-//    val class2: Class<out a> = b::class.java
-//    val class3: Class<out a> = a::class.java
-//
-//    println(class1.isAssignableFrom(class2))
-//    println(class1.isAssignableFrom(class3))
-//    println(class2.isAssignableFrom(class1))
-//    println(class2.isAssignableFrom(class3))
-//    println(class3.isAssignableFrom(class1))
-//    println(class3.isAssignableFrom(class2))
-//}

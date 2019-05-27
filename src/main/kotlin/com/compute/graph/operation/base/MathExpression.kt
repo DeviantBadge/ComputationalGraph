@@ -2,14 +2,14 @@ package com.compute.graph.operation.base
 
 import com.compute.graph.operation.objects.TransformableDelegate
 
-sealed class MathExpression: TransformableExpression()
+sealed class MathExpression : TransformableExpression()
 
-abstract class IndependentOperand: MathExpression()  {
+abstract class IndependentOperand : MathExpression() {
     final override val children: List<MathExpression>
         get() = listOf()
 }
 
-abstract class IndependentOperation: MathExpression()  {
+abstract class IndependentOperation : MathExpression() {
     final override val children: List<MathExpression>
         get() = listOf()
 }
@@ -47,7 +47,7 @@ abstract class TernaryOperation(
         leftArgument: MathExpression,
         middleArgument: MathExpression,
         rightArgument: MathExpression
-): MathExpression() {
+) : MathExpression() {
     override val children: List<MathExpression>
         get() = listOf(leftArgument, middleArgument, rightArgument)
 
@@ -61,16 +61,14 @@ abstract class TernaryOperation(
 }
 
 abstract class VectorOperation(
-        private val arguments: MutableList<MathExpression>)
-    : MathExpression() {
+        val arguments: MutableList<MathExpression>
+) : MathExpression() {
 
     override val children: List<MathExpression>
         get() = arguments
 
-    constructor(vararg args: MathExpression): this(args.toMutableList())
-
     init {
-        for(arg in arguments)
+        for (arg in arguments)
             arg.addParent(this)
     }
 

@@ -1,5 +1,5 @@
 package com.compute.graph.operation.interfaces
 
 interface Differentiable {
-    fun differentiate() // todo
+    fun differentiate(varName: String, args: ExpressionArgs): Double // todo
 }

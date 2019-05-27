@@ -7,14 +7,14 @@ import com.compute.graph.operation.interfaces.ExpressionArgs
 import kotlin.math.cos
 import kotlin.math.sin
 
-@Function("sin")
-class SinFunction(
+@Function("cos")
+class CosFunction(
         argument: MathExpression
 ) : UnaryOperation(argument) {
     override fun compute(args: ExpressionArgs): Double {
-        return sin(children[0].compute(args))
+        return cos(children[0].compute(args))
     }
 
     override fun differentiate(varName: String, args: ExpressionArgs): Double =
-            cos(argument.compute(args)) * argument.differentiate(varName, args)
+            -sin(argument.compute(args)) * argument.differentiate(varName, args)
 }

@@ -16,7 +16,7 @@ interface OperationBuilder {
     fun <T : MathExpression> build(
             exprType: KClass<T>,
             name: String,
-            vararg arguments: MathExpression
+            vararg arguments: Any
     ): T
 
     fun buildIndependentOperand(
@@ -52,13 +52,13 @@ interface OperationBuilder {
 
     fun buildVectorOperation(
             name: String,
-            vararg arguments: MathExpression
+            arguments: List<MathExpression>
     ): VectorOperation =
-            build(VectorOperation::class, name, *arguments)
+            build(VectorOperation::class, name, arguments)
 
     fun buildVectorOperation(
             name: String,
-            arguments: List<MathExpression>
+            vararg arguments: MathExpression
     ): VectorOperation =
-            build(VectorOperation::class, name, *arguments.toTypedArray())
+            buildVectorOperation(name, arguments.toList())
 }

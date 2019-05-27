@@ -11,13 +11,19 @@ import com.compute.graph.operation.interfaces.ExpressionArgs
 class MulOp(
         arguments: MutableList<MathExpression>
 ) : VectorOperation(arguments) {
-    constructor(vararg arguments: MathExpression): this(arguments.toMutableList())
+
+    constructor(vararg arguments: MathExpression) : this(arguments.toMutableList())
 
     override fun compute(args: ExpressionArgs): Double {
-        return children.fold(1.toDouble()) { mul, element -> mul * element.compute(args)}
+        return children.fold(1.toDouble()) { mul, element -> mul * element.compute(args) }
     }
 
-    override fun differentiate() {
-        TODO("Function \"${javaClass.name}.differentiate\" not implemented")
-    }
+    override fun differentiate(varName: String, args: ExpressionArgs): Double =
+            arguments.fold(0.0) { acc, expr ->
+                acc + expr.differentiate(varName, args) *
+                        arguments.fold(1.0) { accM, exprM ->
+                            accM * (if (exprM == expr) 1.0 else exprM.compute(args))
+                        }
+            }
+
 }

@@ -53,12 +53,12 @@ abstract class BaseBuilder : OperationBuilder, OperationRegistry {
     override fun <T: MathExpression> build(
             exprType: KClass<T>,
             name: String,
-            vararg arguments: MathExpression
+            vararg arguments: Any
     ): T{
         val exprNumber = sealedHelper.getSealedNumber(exprType)
         registeredExpressions[exprNumber][name]?.let {
             try {
-                return Reflect.on(it).create(arguments).get()
+                return Reflect.on(it).create(*arguments).get()
             } catch (exc: ReflectException) {
                 throw UnsupportedOperationException("Failed to call constructor on class '${it.canonicalName}', error message - '${exc.message}'", exc)
             }
