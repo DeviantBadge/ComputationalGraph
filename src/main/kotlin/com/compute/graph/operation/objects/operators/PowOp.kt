@@ -4,7 +4,7 @@ import com.compute.graph.operation.annotations.Constant
 import com.compute.graph.operation.annotations.Operator
 import com.compute.graph.operation.base.*
 import com.compute.graph.operation.interfaces.ExpressionArgs
-import org.springframework.stereotype.Component
+import kotlin.math.pow
 
 @Operator("^")
 class PowOp(

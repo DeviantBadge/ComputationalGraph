@@ -45,10 +45,7 @@ dependencies {
     implementation("org.apache.commons:commons-math3:3.6.1")
 
 
-    // https://mvnrepository.com/artifact/org.springframework/spring-context
-    implementation("org.springframework:spring-context:5.1.7.RELEASE")
     // scanners do not know what is better
-    implementation("org.reflections:reflections:0.9.11")
     implementation("io.github.classgraph:classgraph:4.8.37")
     implementation("org.jooq:joor-java-8:0.9.7")
 
@@ -59,7 +56,6 @@ dependencies {
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-
     // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
