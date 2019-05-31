@@ -1,5 +1,9 @@
 package com.compute.graph.operation.interfaces
 
+import com.compute.graph.operation.base.MultipleResult
+
 interface Differentiable {
-    fun differentiate(varName: String, args: ExpressionArgs): Double // todo
+    fun differentiateForward(args: ExpressionArgs): MultipleResult
+
+    fun differentiateBackward(args: ExpressionArgs): MultipleResult
 }

@@ -60,6 +60,7 @@ abstract class TernaryOperation(
             by TransformableDelegate(this, rightArgument)
 }
 
+// todo remove them
 abstract class VectorOperation(
         val arguments: MutableList<MathExpression>
 ) : MathExpression() {

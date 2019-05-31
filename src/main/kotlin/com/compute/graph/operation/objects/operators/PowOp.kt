@@ -2,10 +2,7 @@ package com.compute.graph.operation.objects.operators
 
 import com.compute.graph.operation.annotations.Constant
 import com.compute.graph.operation.annotations.Operator
-import com.compute.graph.operation.base.BinaryOperation
-import com.compute.graph.operation.base.MathExpression
-import com.compute.graph.operation.base.TransformableExpression
-import com.compute.graph.operation.base.VectorOperation
+import com.compute.graph.operation.base.*
 import com.compute.graph.operation.interfaces.ExpressionArgs
 import org.springframework.stereotype.Component
 
@@ -13,14 +10,26 @@ import org.springframework.stereotype.Component
 class PowOp(
         arguments: MutableList<MathExpression>
 ) : VectorOperation(arguments) {
+    override fun compute(args: ExpressionArgs): ComputationResult =
+            when (val leftChildResult = leftArgument.compute(args)) {
+                is ScalarComputationResult ->
+                    when (val rightChildResult = leftArgument.compute(args)) {
+                        is ScalarComputationResult ->
+                            ScalarComputationResult(leftChildResult.value / rightChildResult.value)
+                        is VectorComputationResult -> TODO()
+                        is MatrixComputationResult -> TODO()
+                        is MultipleResult -> TODO()
+                    }
+                is VectorComputationResult -> TODO()
+                is MatrixComputationResult -> TODO()
+                is MultipleResult -> TODO()
+            }
 
-    constructor(vararg arguments: MathExpression): this(arguments.toMutableList())
-
-    override fun compute(args: ExpressionArgs): Double {
-        return children.fold(0.0) { sum, element -> sum + element.compute(args)}
+    override fun differentiateForward(args: ExpressionArgs): MultipleResult {
+        TODO("Function \"${javaClass.name}.differentiateForward\" not implemented")
     }
 
-    override fun differentiate(varName: String, args: ExpressionArgs): Double {
-        TODO("Function \"${javaClass.name}.differentiate\" not implemented")
+    override fun differentiateBackward(args: ExpressionArgs): MultipleResult {
+        TODO("Function \"${javaClass.name}.differentiateBackward\" not implemented")
     }
 }

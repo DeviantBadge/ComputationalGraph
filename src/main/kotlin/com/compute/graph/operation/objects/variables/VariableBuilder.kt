@@ -1,15 +1,7 @@
 package com.compute.graph.operation.objects.variables
 
-import com.compute.graph.operation.base.BinaryOperation
-import com.compute.graph.operation.base.IndependentOperand
-import com.compute.graph.operation.base.IndependentOperation
-import com.compute.graph.operation.base.MathExpression
-import com.compute.graph.operation.base.TernaryOperation
-import com.compute.graph.operation.base.UnaryOperation
-import com.compute.graph.operation.base.VectorOperation
-import com.compute.graph.operation.base.builders.BaseBuilder
+import com.compute.graph.operation.base.*
 import com.compute.graph.operation.interfaces.builders.OperationBuilder
-import com.compute.graph.operation.objects.constants.ScalarConstant
 import javax.naming.OperationNotSupportedException
 import kotlin.reflect.KClass
 

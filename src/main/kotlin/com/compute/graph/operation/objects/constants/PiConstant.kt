@@ -5,7 +5,6 @@ import kotlin.math.PI
 
 @Constant("pi", "Pi")
 class PiConstant : ScalarConstant(PI) {
-
     override fun toString(): String {
         return "π"
     }

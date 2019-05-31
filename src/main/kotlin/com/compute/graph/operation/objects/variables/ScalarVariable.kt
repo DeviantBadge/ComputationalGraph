@@ -2,10 +2,7 @@ package com.compute.graph.operation.objects.variables
 
 import com.compute.graph.operation.annotations.Variable
 import com.compute.graph.operation.base.IndependentOperand
-import com.compute.graph.operation.base.IndependentOperation
-import com.compute.graph.operation.base.TransformableExpression
 import com.compute.graph.operation.interfaces.ExpressionArgs
-import java.lang.IllegalArgumentException
 
 @Variable
 class ScalarVariable(
