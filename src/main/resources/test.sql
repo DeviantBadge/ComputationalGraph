@@ -56,76 +56,75 @@ SELECT /*+ mapjoin(s) */
     round(d.logisticsfeerate, 6)                                                                          as commission_rate_delivery,
     a.escrow_fee_amt                                                                                      as commission,
     cast(substr(a.fin_date, 1, 6) as bigint)                                                              as report_month
-FROM
-    (
-        select
-            ds,
-            order_id,
-            fin_date,
-            gmv_amt,
-            gmv_amt_usd,
-            escrow_fee_amt,
-            seller_aliid
-        from aebi.adm_ae_fin_trans_df
-            where substr(fin_date, 1, 6) = to_char(dateadd(datetrunc(to_date('${sysdate}', 'yyyymmdd'), 'month'), -1, 'dd'), 'yyyymm')
-                and ds = '${sysdate}'
-                and trans_type = 'Gaap'
-                and trd_end_reason not in ('buyer_cancel_order_in_risk', 'cancel_order_close_trade', 'seller_send_goods_timeout')
-    ) a
+FROM (
+         select ds,
+                order_id,
+                fin_date,
+                gmv_amt,
+                gmv_amt_usd,
+                escrow_fee_amt,
+                seller_aliid
+         from aebi.adm_ae_fin_trans_df
+         where substr(fin_date, 1, 6) =
+               to_char(dateadd(datetrunc(to_date('${sysdate}', 'yyyymmdd'), 'month'), -1, 'dd'), 'yyyymm')
+           and ds = '${sysdate}'
+           and trans_type = 'Gaap'
+           and trd_end_reason not in
+               ('buyer_cancel_order_in_risk', 'cancel_order_close_trade', 'seller_send_goods_timeout')
+     ) a
 
-    inner join
-        ae_seller_center.ae_merchant_seller_relation b
-        on a.seller_aliid = b.seller_id and b.ds = a.ds
+         inner join
+     ae_seller_center.ae_merchant_seller_relation b
+     on a.seller_aliid = b.seller_id and b.ds = a.ds
 
-    inner join (
-        -- all Russian L2L sellers
-        select
-            seller_id,
-            seller_seq,
-            seller_admin_seq,
-            seller_start_time,
-            store_name
-        FROM aecdm.dim_ae_slr
-            where seller_status = 'enabled'
-                AND register_country_id = 'RU'
-                AND local_seller_account_unit = 'RUB'
-                AND is_admin_seller = 'Y'
-                AND ds = to_char(dateadd(datetrunc(to_date('${sysdate}', 'yyyymmdd'), 'month'), -1, 'dd'), 'yyyymmdd')
-    ) s
-        on s.seller_admin_seq = a.seller_aliid
+         inner join (
+    -- all Russian L2L sellers
+    select seller_id,
+           seller_seq,
+           seller_admin_seq,
+           seller_start_time,
+           store_name
+    FROM aecdm.dim_ae_slr
+    where seller_status = 'enabled'
+      AND register_country_id = 'RU'
+      AND local_seller_account_unit = 'RUB'
+      AND is_admin_seller = 'Y'
+      AND ds = to_char(dateadd(datetrunc(to_date('${sysdate}', 'yyyymmdd'), 'month'), -1, 'dd'), 'yyyymmdd')
+) s
+                    on s.seller_admin_seq = a.seller_aliid
 
-    left outer join (
-        select ds,
-            seller_admin_id,
-            seller_admin_seq,
-            parent_order_id,
-            item_id,
-            item_name,
-            unit_num,
-            order_id,
-            --money
-            div_refund_ord_amt,
-            --statuses
-            is_send_goods,
-            refund_create_time,
-            gmt_pay_order_time
-        from aecdm.dwd_ae_trd_all_df t
-    ) c
-        ON c.order_id = a.order_id and c.ds = a.ds
+         left outer join (
+    select ds,
+           seller_admin_id,
+           seller_admin_seq,
+           parent_order_id,
+           item_id,
+           item_name,
+           unit_num,
+           order_id,
+           --money
+           div_refund_ord_amt,
+           --statuses
+           is_send_goods,
+           refund_create_time,
+           gmt_pay_order_time
+    from aecdm.dwd_ae_trd_all_df t
+) c
+                         ON c.order_id = a.order_id and c.ds = a.ds
 
-    left outer join (
-        select
-            --money
-            seller_admin_seq,
-            logisticsfeerate,
-            bar_code,
-            orderfeerate,
-            cast(discount_fee * 100 as bigint)  as discount_fee,
-            cast(pay_amt_itm * 100 as bigint)   as pay_amt_itm,
-            order_id,
-            cast(pay_amt_logis * 100 as bigint) as pay_amt_logis,
-            --statuses
-            end_reason
-        from aebi.adm_ae_local_trd_ru_df
-    ) d
-        ON a.order_id = d.order_id;
+         left outer join (
+    select
+        --money
+        seller_admin_seq,
+        logisticsfeerate,
+        bar_code,
+        orderfeerate,
+        cast(discount_fee * 100 as bigint)  as discount_fee,
+        cast(pay_amt_itm * 100 as bigint)   as pay_amt_itm,
+        order_id,
+        cast(pay_amt_logis * 100 as bigint) as pay_amt_logis,
+        --statuses
+        end_reason
+    from aebi.adm_ae_local_trd_ru_df
+) d
+                         ON a.order_id = d.order_id;

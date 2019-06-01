@@ -15,7 +15,7 @@ import org.apache.commons.math3.linear.RealVector
  */
 object ArgumentBuilder {
     fun build(init: ArgumentContext.() -> Unit): ExpressionArgs =
-            ArgumentContext().apply(init).build()
+        ArgumentContext().apply(init).build()
 }
 
 class ArgumentContext {
@@ -38,5 +38,5 @@ class ArgumentContext {
     }
 
     fun build(): ExpressionArgs =
-            Arguments(values)
+        Arguments(values)
 }

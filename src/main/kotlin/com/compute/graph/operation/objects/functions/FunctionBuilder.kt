@@ -12,6 +12,4 @@ import com.compute.graph.operation.objects.constants.ScalarConstant
  * @Since: 1.0
  * @Version:1.0,Date:2019-05-21
  */
-object FunctionBuilder: BaseBuilder() {
-
-}
+object FunctionBuilder : BaseBuilder()

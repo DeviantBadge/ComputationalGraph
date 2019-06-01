@@ -20,19 +20,19 @@ abstract class BaseBuilder : OperationBuilder, OperationRegistry {
     // and registered names
     //************************************************************************************************************//
     protected val registeredExpressions =
-            List(sealedHelper.sealedTypesAmount) {
-                hashMapOf<String, Class<out MathExpression>>()
-            }
+        List(sealedHelper.sealedTypesAmount) {
+            hashMapOf<String, Class<out MathExpression>>()
+        }
 
     override val registeredNames: Set<String>
         get() = registeredExpressions
-                .map { it.keys }
-                .fold(hashSetOf()) { acc, elem ->
-                    acc.apply { addAll(elem) }
-                }
+            .map { it.keys }
+            .fold(hashSetOf()) { acc, elem ->
+                acc.apply { addAll(elem) }
+            }
 
     fun registeredNames(sealedNumber: Int): Set<String> =
-            registeredExpressions[sealedNumber].keys
+        registeredExpressions[sealedNumber].keys
 
     override fun register(names: List<String>, clazz: Class<out MathExpression>) {
         val exprNumber = sealedHelper.getSealedNumber(clazz)
@@ -50,11 +50,11 @@ abstract class BaseBuilder : OperationBuilder, OperationRegistry {
     //************************************************************************************************************//
 
     // todo also try to generify this functions - too many of them + i use IndependentOperation::class manually
-    override fun <T: MathExpression> build(
-            exprType: KClass<T>,
-            name: String,
-            vararg arguments: Any
-    ): T{
+    override fun <T : MathExpression> build(
+        exprType: KClass<T>,
+        name: String,
+        vararg arguments: Any
+    ): T {
         val exprNumber = sealedHelper.getSealedNumber(exprType)
         registeredExpressions[exprNumber][name]?.let {
             try {
@@ -65,9 +65,8 @@ abstract class BaseBuilder : OperationBuilder, OperationRegistry {
         }
 
         throw IllegalArgumentException("We do not have operation with name $name for operation type ${exprType.simpleName}, " +
-                "currently registered operands - " + registeredNames(exprNumber).joinToString(prefix = "[", postfix = "]"))
+            "currently registered operands - " + registeredNames(exprNumber).joinToString(prefix = "[", postfix = "]"))
     }
-
 
 
 }

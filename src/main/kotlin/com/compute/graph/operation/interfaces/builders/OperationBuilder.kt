@@ -14,51 +14,51 @@ import kotlin.reflect.KClass
  */
 interface OperationBuilder {
     fun <T : MathExpression> build(
-            exprType: KClass<T>,
-            name: String,
-            vararg arguments: Any
+        exprType: KClass<T>,
+        name: String,
+        vararg arguments: Any
     ): T
 
     fun buildIndependentOperand(
-            name: String
+        name: String
     ): IndependentOperand =
-            build(IndependentOperand::class, name)
+        build(IndependentOperand::class, name)
 
     fun buildIndependentOperation(
-            name: String
+        name: String
     ): IndependentOperation =
-            build(IndependentOperation::class, name)
+        build(IndependentOperation::class, name)
 
     fun buildUnaryOperation(
-            name: String,
-            argument: MathExpression
+        name: String,
+        argument: MathExpression
     ): UnaryOperation =
-            build(UnaryOperation::class, name, argument)
+        build(UnaryOperation::class, name, argument)
 
     fun buildBinaryOperation(
-            name: String,
-            leftArgument: MathExpression,
-            rightArgument: MathExpression
+        name: String,
+        leftArgument: MathExpression,
+        rightArgument: MathExpression
     ): BinaryOperation =
-            build(BinaryOperation::class, name, leftArgument, rightArgument)
+        build(BinaryOperation::class, name, leftArgument, rightArgument)
 
     fun buildTernaryOperation(
-            name: String,
-            leftArgument: MathExpression,
-            middleArgument: MathExpression,
-            rightArgument: MathExpression
+        name: String,
+        leftArgument: MathExpression,
+        middleArgument: MathExpression,
+        rightArgument: MathExpression
     ): TernaryOperation =
-            build(TernaryOperation::class, name, leftArgument, middleArgument, rightArgument)
+        build(TernaryOperation::class, name, leftArgument, middleArgument, rightArgument)
 
     fun buildVectorOperation(
-            name: String,
-            arguments: List<MathExpression>
+        name: String,
+        arguments: List<MathExpression>
     ): VectorOperation =
-            build(VectorOperation::class, name, arguments)
+        build(VectorOperation::class, name, arguments)
 
     fun buildVectorOperation(
-            name: String,
-            vararg arguments: MathExpression
+        name: String,
+        vararg arguments: MathExpression
     ): VectorOperation =
-            buildVectorOperation(name, arguments.toList())
+        buildVectorOperation(name, arguments.toList())
 }

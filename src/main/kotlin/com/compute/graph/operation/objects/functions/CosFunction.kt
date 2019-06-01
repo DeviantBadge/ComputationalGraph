@@ -8,17 +8,17 @@ import kotlin.math.sin
 
 @Function("cos")
 class CosFunction(
-        argument: MathExpression
+    argument: MathExpression
 ) : UnaryOperation(argument) {
 
     // todo it can be moved to another function definition in UnaryOperator
     override fun compute(args: ExpressionArgs): ComputationResult =
-            when (val childResult = argument.compute(args)) {
-                is ScalarComputationResult -> ScalarComputationResult(cos(childResult.value))
-                is VectorComputationResult -> TODO()
-                is MatrixComputationResult -> TODO()
-                is MultipleResult -> TODO()
-            }
+        when (val childResult = argument.compute(args)) {
+            is ScalarComputationResult -> ScalarComputationResult(cos(childResult.value))
+            is VectorComputationResult -> TODO()
+            is MatrixComputationResult -> TODO()
+            is MultipleResult -> TODO()
+        }
 
 
     override fun differentiateForward(args: ExpressionArgs): MultipleResult {

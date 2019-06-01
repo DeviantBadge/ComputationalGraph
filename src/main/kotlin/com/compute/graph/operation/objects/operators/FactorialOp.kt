@@ -9,7 +9,7 @@ import org.apache.commons.math3.special.Gamma
 
 @Operator("!")
 class FactorialOp(
-        argument: MathExpression
+    argument: MathExpression
 ) : UnaryOperation(argument) {
     // todo may be produce differential in another class, that can remember values?
     override fun differentiate(varName: String, args: ExpressionArgs): Double {

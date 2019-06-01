@@ -6,16 +6,16 @@ import com.compute.graph.operation.interfaces.ExpressionArgs
 
 @Variable
 class ScalarVariable(
-        private val name: String
+    private val name: String
 ) : IndependentOperand() {
 
     override fun compute(args: ExpressionArgs): Double {
         return args[name] ?: throw IllegalArgumentException("Arguments do not contain variable with name $name. " +
-                "It contains only ${args.names.joinToString(prefix = "[", postfix = "]")}")
+            "It contains only ${args.names.joinToString(prefix = "[", postfix = "]")}")
     }
 
     override fun differentiate(varName: String, args: ExpressionArgs): Double =
-            if (name == varName) 1.0 else 0.0
+        if (name == varName) 1.0 else 0.0
 
     override fun toString(): String {
         return name

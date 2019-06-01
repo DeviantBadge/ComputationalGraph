@@ -3,7 +3,7 @@ package com.compute.graph.graph
 /**
  * Basic tree node that we will use further
  */
-interface DirectedGraphNode<T>: DirectedGraph {
+interface DirectedGraphNode<T> : DirectedGraph {
     /**
      * Returns all children of current node
      */

@@ -26,25 +26,25 @@ interface OperationRegistry {
     val registeredNames: Set<String>
 
     fun isRegistered(name: String): Boolean =
-            registeredNames.contains(name)
+        registeredNames.contains(name)
 
     fun register(
-            names: List<String>,
-            clazz: Class<out MathExpression>
+        names: List<String>,
+        clazz: Class<out MathExpression>
     )
 
     fun register(
-            vararg names: String,
-            clazz: Class<out MathExpression>
+        vararg names: String,
+        clazz: Class<out MathExpression>
     ) = register(names.toList(), clazz)
 
     fun register(
-            names: List<String>,
-            clazz: KClass<out MathExpression>
+        names: List<String>,
+        clazz: KClass<out MathExpression>
     ) = register(names, clazz.java)
 
     fun register(
-            vararg names: String,
-            clazz: KClass<out MathExpression>
+        vararg names: String,
+        clazz: KClass<out MathExpression>
     ) = register(names.toList(), clazz.java)
 }

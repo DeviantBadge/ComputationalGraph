@@ -10,12 +10,12 @@ abstract class TransformableExpression : Expression, Transformable {
 
     protected val mutableParents: MutableList<TransformableExpression> = mutableListOf()
 
-    final fun addParent(parent: TransformableExpression) {
+    fun addParent(parent: TransformableExpression) {
         if (!mutableParents.contains(parent))
             mutableParents.add(parent)
     }
 
-    final fun removeParent(parent: TransformableExpression) {
+    fun removeParent(parent: TransformableExpression) {
         mutableParents.remove(parent)
     }
 }

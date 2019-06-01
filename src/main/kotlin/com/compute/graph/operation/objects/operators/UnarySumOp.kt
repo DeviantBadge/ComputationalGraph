@@ -8,7 +8,7 @@ import com.compute.graph.operation.interfaces.ExpressionArgs
 
 @Operator("+")
 class UnarySumOp(
-        argument: MathExpression
+    argument: MathExpression
 ) : UnaryOperation(argument) {
 
     // todo create extension for execution result, that will handle operations
@@ -18,5 +18,5 @@ class UnarySumOp(
     }
 
     override fun differentiate(varName: String, args: ExpressionArgs): Double =
-            argument.differentiate(varName, args)
+        argument.differentiate(varName, args)
 }

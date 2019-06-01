@@ -5,7 +5,7 @@ import com.compute.graph.operation.base.ScalarComputationResult
 
 @Constant
 open class ScalarConstant(
-        private val value: Double
+    private val value: Double
 ) : ConstantValue(ScalarComputationResult(value)) {
     override fun toString(): String {
         return value.toString()

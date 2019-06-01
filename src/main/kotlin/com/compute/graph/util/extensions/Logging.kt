@@ -17,7 +17,7 @@ inline fun <reified T : Any?> T.logger(): Logger {
     val clazz = if (T::class.isCompanion) T::class.java.enclosingClass
     else T::class.java
     return Logging.loggingBag[clazz]
-            ?: LoggerFactory.getLogger(clazz).also {
-                Logging.loggingBag[clazz] = it
-            }
+        ?: LoggerFactory.getLogger(clazz).also {
+            Logging.loggingBag[clazz] = it
+        }
 }

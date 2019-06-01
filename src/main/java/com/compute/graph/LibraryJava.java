@@ -1,7 +1,7 @@
 package com.compute.graph;
 
 public class LibraryJava {
-    public Boolean someLibraryMethod(){
+    public Boolean someLibraryMethod() {
         return true;
     }
 }

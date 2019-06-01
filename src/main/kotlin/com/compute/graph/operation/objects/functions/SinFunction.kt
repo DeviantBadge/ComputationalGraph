@@ -8,15 +8,15 @@ import kotlin.math.sin
 
 @Function("sin")
 class SinFunction(
-        argument: MathExpression
+    argument: MathExpression
 ) : UnaryOperation(argument) {
     override fun compute(args: ExpressionArgs): ComputationResult =
-            when (val childResult = argument.compute(args)) {
-                is ScalarComputationResult -> ScalarComputationResult(sin(childResult.value))
-                is VectorComputationResult -> TODO()
-                is MatrixComputationResult -> TODO()
-                is MultipleResult -> TODO()
-            }
+        when (val childResult = argument.compute(args)) {
+            is ScalarComputationResult -> ScalarComputationResult(sin(childResult.value))
+            is VectorComputationResult -> TODO()
+            is MatrixComputationResult -> TODO()
+            is MultipleResult -> TODO()
+        }
 
     override fun differentiateForward(args: ExpressionArgs): MultipleResult {
         TODO("Function \"${javaClass.name}.differentiateForward\" not implemented")

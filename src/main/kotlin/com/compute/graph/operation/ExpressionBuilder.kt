@@ -57,9 +57,9 @@ object ExpressionBuilder {
 
     fun scanForExpressions(packages: List<String>) {
         scanPackages(
-                packages = packages,
-                annotations = listOf(ExpressionGraphPart::class.java.canonicalName),
-                extendsClasses = listOf(MathExpression::class.java.canonicalName)
+            packages = packages,
+            annotations = listOf(ExpressionGraphPart::class.java.canonicalName),
+            extendsClasses = listOf(MathExpression::class.java.canonicalName)
         )
     }
 
@@ -69,28 +69,28 @@ object ExpressionBuilder {
         else
             packages.toList()
         scanPackages(
-                packages = packagesList,
-                annotations = listOf(ExpressionGraphPart::class.java.canonicalName),
-                extendsClasses = listOf(MathExpression::class.java.canonicalName)
+            packages = packagesList,
+            annotations = listOf(ExpressionGraphPart::class.java.canonicalName),
+            extendsClasses = listOf(MathExpression::class.java.canonicalName)
         )
     }
 
     private fun scanPackages(
-            packages: List<String> = listOf(""),
-            annotations: List<String> = listOf(),
-            implementedInterfaces: List<String> = listOf(),
-            extendsClasses: List<String> = listOf()
+        packages: List<String> = listOf(""),
+        annotations: List<String> = listOf(),
+        implementedInterfaces: List<String> = listOf(),
+        extendsClasses: List<String> = listOf()
     ) {
         ClassGraph().enableAllInfo()
-                .whitelistPackages(*packages.toTypedArray())
-                .scan()
-                .use {
-                    it.allClasses.filter { classInfo ->
-                        annotations.all { annotationName -> classInfo.hasAnnotation(annotationName) }
-                                && implementedInterfaces.all { interfaceName -> classInfo.implementsInterface(interfaceName) }
-                                && extendsClasses.all { className -> classInfo.extendsSuperclass(className) }
-                    }.forEach(this::processClass)
-                }
+            .whitelistPackages(*packages.toTypedArray())
+            .scan()
+            .use {
+                it.allClasses.filter { classInfo ->
+                    annotations.all { annotationName -> classInfo.hasAnnotation(annotationName) }
+                        && implementedInterfaces.all { interfaceName -> classInfo.implementsInterface(interfaceName) }
+                        && extendsClasses.all { className -> classInfo.extendsSuperclass(className) }
+                }.forEach(this::processClass)
+            }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -99,23 +99,23 @@ object ExpressionBuilder {
         if (clazz.hasAnnotation(Function::class.qualifiedName)) {
             res = clazz.loadClass() as Class<out MathExpression>
             res.getAnnotation(Function::class.java).names.toList()
-                    .let {
-                        FunctionBuilder.register(it, res!!)
-                    }
+                .let {
+                    FunctionBuilder.register(it, res!!)
+                }
         }
         if (clazz.hasAnnotation(Operator::class.qualifiedName)) {
             res = clazz.loadClass() as Class<out MathExpression>
             res.getAnnotation(Operator::class.java).names.toList()
-                    .let {
-                        OperatorBuilder.register(it, res!!)
-                    }
+                .let {
+                    OperatorBuilder.register(it, res!!)
+                }
         }
         if (clazz.hasAnnotation(Constant::class.qualifiedName)) {
             res = clazz.loadClass() as Class<out MathExpression>
             res.getAnnotation(Constant::class.java).names.toList()
-                    .let {
-                        ConstantBuilder.register(it, res!!)
-                    }
+                .let {
+                    ConstantBuilder.register(it, res)
+                }
         }
         if (clazz.hasAnnotation(Variable::class.qualifiedName)) {
             // todo what to do here
@@ -140,7 +140,7 @@ internal class ExpressionContext {
 }
 
 internal class ExpressionGraphListener(
-        private val expressionContext: ExpressionContext
+    private val expressionContext: ExpressionContext
 ) : ExpressionBaseListener() {
     lateinit var result: MathExpression
 
@@ -258,8 +258,8 @@ internal class ExpressionGraphListener(
                     result = FunctionBuilder.buildUnaryOperation(funName, expressionContext.build(ctx.getChild(1)))
                 else
                     result = OperatorBuilder.buildVectorOperation("*",
-                            expressionContext.build(ctx.getChild(0)),
-                            expressionContext.build(ctx.getChild(1)))
+                        expressionContext.build(ctx.getChild(0)),
+                        expressionContext.build(ctx.getChild(1)))
             }
             else -> {
                 throw IllegalStateException("Unexpected child amount - ${ctx.childCount} while parsing ${ctx.text}")
@@ -272,8 +272,8 @@ internal class ExpressionGraphListener(
             expressionContext.build(ctx.getChild(0))
         } else {
             OperatorBuilder.buildUnaryOperation(
-                    ctx.getChild(1).text,
-                    expressionContext.build(ctx.getChild(0))
+                ctx.getChild(1).text,
+                expressionContext.build(ctx.getChild(0))
             )
         }
     }

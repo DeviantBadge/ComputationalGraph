@@ -8,20 +8,20 @@ sealed class ComputationResult
 
 // todo mb its better to create lists
 class ScalarComputationResult(
-        var value: Double
+    var value: Double
 ) : ComputationResult()
 
 class VectorComputationResult(
-        var value: RealVector
+    var value: RealVector
 ) : ComputationResult()
 
 class MatrixComputationResult(
-        var value: RealMatrix
+    var value: RealMatrix
 ) : ComputationResult()
 
 class MultipleResult(
-        /**
-         * Function name mapped to diff result
-         */
-        val map: MutableMap<String, ComputationResult>
+    /**
+     * Function name mapped to diff result
+     */
+    val map: MutableMap<String, ComputationResult>
 ) : ComputationResult()

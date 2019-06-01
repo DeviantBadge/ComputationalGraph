@@ -8,16 +8,16 @@ import com.compute.graph.operation.interfaces.ExpressionArgs
 
 @Operator("-")
 class UnarySubOp(
-        argument: MathExpression
+    argument: MathExpression
 ) : UnaryOperation(argument) {
 
     // todo create extension for execution result, that will handle operations
     // todo validation
     override fun compute(args: ExpressionArgs): Double {
-        return - argument.compute(args)
+        return -argument.compute(args)
     }
 
 
     override fun differentiate(varName: String, args: ExpressionArgs): Double =
-            - argument.differentiate(varName, args)
+        -argument.differentiate(varName, args)
 }

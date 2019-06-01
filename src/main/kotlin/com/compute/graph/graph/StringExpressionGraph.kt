@@ -11,10 +11,10 @@ import org.antlr.v4.runtime.tree.*
 import java.lang.IllegalStateException
 
 class StringExpressionGraph(
-        override var value: String = "",
-        override val parents: MutableList<StringExpressionGraph> = mutableListOf(),
-        override val children: MutableList<StringExpressionGraph> = mutableListOf()) :
-        DirectedGraphNode<String> {
+    override var value: String = "",
+    override val parents: MutableList<StringExpressionGraph> = mutableListOf(),
+    override val children: MutableList<StringExpressionGraph> = mutableListOf()) :
+    DirectedGraphNode<String> {
 
     init {
         children.forEach {
@@ -25,7 +25,7 @@ class StringExpressionGraph(
     constructor(value: String = "",
                 parent: StringExpressionGraph,
                 children: MutableList<StringExpressionGraph> = mutableListOf()) :
-            this(value, mutableListOf(parent), children)
+        this(value, mutableListOf(parent), children)
 
     fun addChild(child: StringExpressionGraph) {
         children.add(child)
@@ -69,7 +69,7 @@ class StringExpressionGraphListener : ExpressionBaseListener() {
     override fun enterEquation(ctx: ExpressionParser.EquationContext) {
         if (ctx.childCount != 3)
             throw IllegalStateException("Expected exactly 3 children, but got ${ctx.childCount}\n" +
-                    "\tinput data - ${ctx.text}")
+                "\tinput data - ${ctx.text}")
         result = StringExpressionGraph(ctx.getChild(1).text)
         result.addChild(StringExpressionGraphBuilder.build(ctx.getChild(0)))
         result.addChild(StringExpressionGraphBuilder.build(ctx.getChild(2)))
@@ -193,7 +193,7 @@ class StringExpressionGraphListener : ExpressionBaseListener() {
     override fun enterExpr_in_brackets(ctx: ExpressionParser.Expr_in_bracketsContext) {
         if (ctx.childCount != 3)
             throw IllegalStateException("Expected exactly 3 children, but got ${ctx.childCount}\n" +
-                    "\tinput data - ${ctx.text}")
+                "\tinput data - ${ctx.text}")
         result = StringExpressionGraphBuilder.build(ctx.getChild(1))
     }
 

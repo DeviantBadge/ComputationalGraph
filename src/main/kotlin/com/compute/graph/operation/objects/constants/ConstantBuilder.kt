@@ -22,13 +22,13 @@ import kotlin.reflect.KClass
 object ConstantBuilder : BaseBuilder() {
 
     override fun buildIndependentOperation(
-            name: String
+        name: String
     ): IndependentOperation {
         throw OperationNotSupportedException("Cant build operations in constants builder")
     }
 
     override fun buildIndependentOperand(
-            name: String
+        name: String
     ): IndependentOperand {
         name.toDoubleOrNull()?.let {
             return ScalarConstant(it)
@@ -37,32 +37,32 @@ object ConstantBuilder : BaseBuilder() {
     }
 
     override fun buildUnaryOperation(
-            name: String,
-            argument: MathExpression
+        name: String,
+        argument: MathExpression
     ): UnaryOperation {
         throw OperationNotSupportedException("Cant build operations in constants builder")
     }
 
     override fun buildBinaryOperation(
-            name: String,
-            leftArgument: MathExpression,
-            rightArgument: MathExpression
+        name: String,
+        leftArgument: MathExpression,
+        rightArgument: MathExpression
     ): BinaryOperation {
         throw OperationNotSupportedException("Cant build operations in constants builder")
     }
 
     override fun buildTernaryOperation(
-            name: String,
-            leftArgument: MathExpression,
-            middleArgument: MathExpression,
-            rightArgument: MathExpression
+        name: String,
+        leftArgument: MathExpression,
+        middleArgument: MathExpression,
+        rightArgument: MathExpression
     ): TernaryOperation {
         throw OperationNotSupportedException("Cant build operations in constants builder")
     }
 
     override fun buildVectorOperation(
-            name: String,
-            arguments: List<MathExpression>
+        name: String,
+        arguments: List<MathExpression>
     ): VectorOperation {
         throw OperationNotSupportedException("Cant build operations in constants builder")
     }

@@ -7,7 +7,7 @@ import com.compute.graph.operation.base.ScalarComputationResult
 import com.compute.graph.operation.interfaces.ExpressionArgs
 
 abstract class ConstantValue(
-        private val value: ComputationResult
+    private val value: ComputationResult
 ) : IndependentOperand() {
 
     override fun compute(args: ExpressionArgs): ComputationResult {
@@ -15,7 +15,7 @@ abstract class ConstantValue(
     }
 
     override fun differentiateForward(args: ExpressionArgs): MultipleResult =
-            MultipleResult(args.names.fold(hashMapOf()) { acc, name -> acc.also { it[name] = ScalarComputationResult(0.0) } })
+        MultipleResult(args.names.fold(hashMapOf()) { acc, name -> acc.also { it[name] = ScalarComputationResult(0.0) } })
 
     override fun differentiateBackward(args: ExpressionArgs): MultipleResult {
         TODO("Backward would be implemented after creation computation context")
