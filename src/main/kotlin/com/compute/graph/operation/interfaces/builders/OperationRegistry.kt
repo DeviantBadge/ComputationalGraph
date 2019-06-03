@@ -1,19 +1,7 @@
 package com.compute.graph.operation.interfaces.builders
 
-import com.compute.graph.operation.base.BinaryOperation
-import com.compute.graph.operation.base.IndependentOperand
-import com.compute.graph.operation.base.IndependentOperation
 import com.compute.graph.operation.base.MathExpression
-import com.compute.graph.operation.base.TernaryOperation
-import com.compute.graph.operation.base.TransformableExpression
-import com.compute.graph.operation.base.UnaryOperation
-import com.compute.graph.operation.base.VectorOperation
-import com.compute.graph.util.SealedHelper
-import com.compute.graph.util.extensions.logger
-import org.joor.Reflect
-import java.lang.IllegalArgumentException
 import kotlin.reflect.KClass
-import kotlin.reflect.full.isSubclassOf
 
 /**
  * @Author: evgeny.vorobyev

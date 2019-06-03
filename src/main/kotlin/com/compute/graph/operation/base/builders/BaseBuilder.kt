@@ -11,7 +11,7 @@ import java.lang.IllegalArgumentException
 import kotlin.reflect.KClass
 
 abstract class BaseBuilder : OperationBuilder, OperationRegistry {
-    protected val sealedHelper = SealedHelper(MathExpression::class)
+    private val sealedHelper = SealedHelper(MathExpression::class)
 
     //************************************************************************************************************//
     //                                      Registry part

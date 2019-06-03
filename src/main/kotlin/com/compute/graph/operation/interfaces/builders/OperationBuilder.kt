@@ -1,9 +1,7 @@
 package com.compute.graph.operation.interfaces.builders
 
 import com.compute.graph.operation.base.*
-import org.joor.Reflect
-import org.joor.ReflectException
-import java.lang.IllegalArgumentException
+import com.compute.graph.operation.base.properties.AssociationType
 import kotlin.reflect.KClass
 
 /**
@@ -41,24 +39,4 @@ interface OperationBuilder {
         rightArgument: MathExpression
     ): BinaryOperation =
         build(BinaryOperation::class, name, leftArgument, rightArgument)
-
-    fun buildTernaryOperation(
-        name: String,
-        leftArgument: MathExpression,
-        middleArgument: MathExpression,
-        rightArgument: MathExpression
-    ): TernaryOperation =
-        build(TernaryOperation::class, name, leftArgument, middleArgument, rightArgument)
-
-    fun buildVectorOperation(
-        name: String,
-        arguments: List<MathExpression>
-    ): VectorOperation =
-        build(VectorOperation::class, name, arguments)
-
-    fun buildVectorOperation(
-        name: String,
-        vararg arguments: MathExpression
-    ): VectorOperation =
-        buildVectorOperation(name, arguments.toList())
 }

@@ -233,5 +233,5 @@ class StringExpressionGraphListener : ExpressionBaseListener() {
 
 fun main() {
     val graph = StringExpressionGraphBuilder.build("-sin 3! * 4 ^ (2 + 2)! ^ 2 * x1 + 3y + 3 - 2")
-    println(null)
+    println(graph)
 }

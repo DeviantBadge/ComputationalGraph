@@ -5,22 +5,13 @@ import com.compute.graph.antlr.ExpressionBaseListener
 import com.compute.graph.antlr.ExpressionLexer
 import com.compute.graph.antlr.ExpressionParser
 import com.compute.graph.graph.StringExpressionGraph
-import com.compute.graph.graph.StringExpressionGraphBuilder
-import com.compute.graph.graph.StringExpressionGraphListener
-import com.compute.graph.operation.annotations.Constant
-import com.compute.graph.operation.annotations.ExpressionGraphPart
+import com.compute.graph.operation.annotations.*
 import com.compute.graph.operation.annotations.Function
-import com.compute.graph.operation.annotations.Operator
-import com.compute.graph.operation.annotations.Variable
 import com.compute.graph.operation.base.MathExpression
-import com.compute.graph.operation.base.TransformableExpression
-import com.compute.graph.operation.interfaces.builders.OperationBuilder
-import com.compute.graph.operation.objects.arguments.ArgumentBuilder
+import com.compute.graph.operation.objects.arguments.ArgsBuilder
 import com.compute.graph.operation.objects.constants.ConstantBuilder
-import com.compute.graph.operation.objects.constants.PiConstant
 import com.compute.graph.operation.objects.functions.FunctionBuilder
 import com.compute.graph.operation.objects.operators.OperatorBuilder
-import com.compute.graph.operation.objects.operators.SumOp
 import com.compute.graph.operation.objects.variables.VariableBuilder
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
@@ -31,7 +22,8 @@ import org.antlr.v4.runtime.tree.ErrorNode
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.RuleNode
 import org.antlr.v4.runtime.tree.TerminalNode
-import kotlin.system.measureTimeMillis
+import kotlin.math.PI
+import kotlin.math.sin
 
 object ExpressionBuilder {
     init {
@@ -152,33 +144,13 @@ internal class ExpressionGraphListener(
         if (ctx.childCount == 1) {
             result = expressionContext.build(ctx.getChild(0))
         } else {
-            val subtract = mutableListOf<MathExpression>()
-            val sum = mutableListOf<MathExpression>()
-            sum.add(expressionContext.build(ctx.getChild(0)))
+            var expr: MathExpression = expressionContext.build(ctx.getChild(0))
 
             for (i in 1 until ctx.childCount step 2) {
                 val child = expressionContext.build(ctx.getChild(i + 1))
-                if (ctx.getChild(i).text == "-") {
-                    subtract.add(child)
-                } else {
-                    sum.add(child)
-                }
+                expr = OperatorBuilder.buildBinaryOperation(ctx.getChild(i).text, expr, child)
             }
-
-            if (sum.size == 1) {
-                result = sum.first()
-            } else {
-                result = OperatorBuilder.buildVectorOperation("+", sum)
-            }
-            if (subtract.isNotEmpty()) {
-                result = if (subtract.size == 1) {
-                    OperatorBuilder.buildBinaryOperation("-", result, subtract.first())
-                } else {
-                    OperatorBuilder.buildVectorOperation("+", subtract).let { subtractPart ->
-                        OperatorBuilder.buildBinaryOperation("-", result, subtractPart)
-                    }
-                }
-            }
+            result = expr
         }
     }
 
@@ -186,40 +158,25 @@ internal class ExpressionGraphListener(
         if (ctx.childCount == 1) {
             result = expressionContext.build(ctx.getChild(0))
         } else {
-            val divide = mutableListOf<MathExpression>()
-            val multiply = mutableListOf<MathExpression>()
-            multiply.add(expressionContext.build(ctx.getChild(0)))
+            var term: MathExpression = expressionContext.build(ctx.getChild(0))
 
             var i = 1
             while (i < ctx.childCount) {
-                when {
-                    ctx.getChild(i).text == "/" -> {
-                        divide.add(expressionContext.build(ctx.getChild(i + 1)))
-                        i += 2
-                    }
-                    ctx.getChild(i).text == "*" -> {
-                        multiply.add(expressionContext.build(ctx.getChild(i + 1)))
+                val child = expressionContext.build(ctx.getChild(i + 1))
+                when (ctx.getChild(i).text) {
+                    "/", "*" -> {
+                        term = OperatorBuilder.buildBinaryOperation(ctx.getChild(i).text, term, child)
                         i += 2
                     }
                     else -> {
-                        multiply.add(expressionContext.build(ctx.getChild(i)))
+                        term = OperatorBuilder.buildBinaryOperation("*", term, child)
                         i++
                     }
                 }
             }
-            if (multiply.size == 1)
-                result = multiply.first()
-            else
-                result = OperatorBuilder.buildVectorOperation("*", multiply)
-            if (divide.isNotEmpty()) {
-                result = if (divide.size == 1) {
-                    OperatorBuilder.buildBinaryOperation("/", result, divide.first())
-                } else {
-                    OperatorBuilder.buildVectorOperation("*", divide).let {
-                        OperatorBuilder.buildBinaryOperation("/", result, it)
-                    }
-                }
-            }
+
+            result = term
+
         }
     }
 
@@ -227,11 +184,14 @@ internal class ExpressionGraphListener(
         if (ctx.childCount == 1) {
             result = expressionContext.build(ctx.getChild(0))
         } else {
-            val powers = mutableListOf<MathExpression>()
-            for (i in 0 until ctx.childCount step 2) {
-                powers.add(expressionContext.build(ctx.getChild(i)))
+            var factor: MathExpression = expressionContext.build(ctx.getChild(0))
+
+            for (i in 1 until ctx.childCount step 2) {
+                val child = expressionContext.build(ctx.getChild(i + 1))
+                // here it would be '^'
+                factor = OperatorBuilder.buildBinaryOperation(ctx.getChild(i).text, factor, child)
             }
-            result = OperatorBuilder.buildVectorOperation("^", powers)
+            result = factor
         }
     }
 
@@ -249,32 +209,35 @@ internal class ExpressionGraphListener(
 
     // todo ended here
     override fun enterComposed_atom(ctx: ExpressionParser.Composed_atomContext) {
-        when {
+        result = when {
             ctx.childCount == 1 ->
-                result = expressionContext.build(ctx.getChild(0))
+                expressionContext.build(ctx.getChild(0))
             ctx.childCount == 2 -> {
                 val funName = ctx.getChild(0).text
                 if (FunctionBuilder.isRegistered(funName))
-                    result = FunctionBuilder.buildUnaryOperation(funName, expressionContext.build(ctx.getChild(1)))
+                    FunctionBuilder.buildUnaryOperation(funName, expressionContext.build(ctx.getChild(1)))
                 else
-                    result = OperatorBuilder.buildVectorOperation("*",
+                    OperatorBuilder.buildBinaryOperation("*",
                         expressionContext.build(ctx.getChild(0)),
                         expressionContext.build(ctx.getChild(1)))
             }
-            else -> {
+            else ->
                 throw IllegalStateException("Unexpected child amount - ${ctx.childCount} while parsing ${ctx.text}")
-            }
         }
     }
 
     override fun enterAtom(ctx: ExpressionParser.AtomContext) {
-        result = if (ctx.childCount == 1) {
-            expressionContext.build(ctx.getChild(0))
-        } else {
-            OperatorBuilder.buildUnaryOperation(
-                ctx.getChild(1).text,
+        result = when {
+            ctx.childCount == 1 ->
                 expressionContext.build(ctx.getChild(0))
-            )
+            ctx.childCount == 2 -> {
+                OperatorBuilder.buildUnaryOperation(
+                    ctx.getChild(1).text,
+                    expressionContext.build(ctx.getChild(0))
+                )
+            }
+            else ->
+                throw IllegalStateException("Unexpected child amount - ${ctx.childCount} while parsing ${ctx.text}")
         }
     }
 
@@ -321,6 +284,8 @@ internal class ExpressionGraphListener(
 
 fun main() {
     val expr = ExpressionBuilder.build("2*x+ 33 + sin(pi*x) / pi")
-    println(expr.differentiate("x", ArgumentBuilder.build { "x" to 3.0 }))
+    println(expr.compute(ArgsBuilder.buildContext { "x" to 3.0 }))
+
     println()
+    println(sin(3 * PI))
 }

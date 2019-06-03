@@ -5,21 +5,31 @@ import com.compute.graph.operation.base.MatrixComputationResult
 import com.compute.graph.operation.base.ScalarComputationResult
 import com.compute.graph.operation.base.VectorComputationResult
 import com.compute.graph.operation.interfaces.ExpressionArgs
+import com.compute.graph.operation.interfaces.ExpressionContext
 import org.apache.commons.math3.linear.RealMatrix
 import org.apache.commons.math3.linear.RealVector
 
 /**
- * @Author: evgeny.vorobyev
+ * @Author: evgeny
  * @Since: 1.0
  * @Version:1.0,Date:2019-05-21
  */
-object ArgumentBuilder {
-    fun build(init: ArgumentContext.() -> Unit): ExpressionArgs =
-        ArgumentContext().apply(init).build()
+object ArgsBuilder {
+    fun buildArgs(init: ArgsBuilderContext.() -> Unit): ExpressionArgs =
+        ArgsBuilderContext().apply(init).buildArgs()
+
+    fun buildContext(init: ContextBuilderContext.() -> Unit): ExpressionContext =
+        ContextBuilderContext().apply(init).buildContext()
 }
 
-class ArgumentContext {
-    private val values = hashMapOf<String, ComputationResult>()
+class ContextBuilderContext: ArgsBuilderContext() {
+
+    fun buildContext(): ExpressionContext =
+        ComputationContext(values)
+}
+
+open class ArgsBuilderContext {
+    val values = hashMapOf<String, ComputationResult>()
 
     infix fun String.to(value: Double) {
         values[this] = ScalarComputationResult(value)
@@ -37,6 +47,6 @@ class ArgumentContext {
         values[this] = MatrixComputationResult(value)
     }
 
-    fun build(): ExpressionArgs =
-        Arguments(values)
+    fun buildArgs(): ExpressionArgs =
+        ComputationArgs(values)
 }

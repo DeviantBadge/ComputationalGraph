@@ -13,7 +13,7 @@ class VariableBuilder : OperationBuilder {
         name: String,
         vararg arguments: Any
     ): T {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in variable builder")
     }
 
     override fun buildIndependentOperand(
@@ -25,14 +25,14 @@ class VariableBuilder : OperationBuilder {
     override fun buildIndependentOperation(
         name: String
     ): IndependentOperation {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in variable builder")
     }
 
     override fun buildUnaryOperation(
         name: String,
         argument: MathExpression
     ): UnaryOperation {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in variable builder")
     }
 
     override fun buildBinaryOperation(
@@ -40,22 +40,6 @@ class VariableBuilder : OperationBuilder {
         leftArgument: MathExpression,
         rightArgument: MathExpression
     ): BinaryOperation {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
-    }
-
-    override fun buildTernaryOperation(
-        name: String,
-        leftArgument: MathExpression,
-        middleArgument: MathExpression,
-        rightArgument: MathExpression
-    ): TernaryOperation {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
-    }
-
-    override fun buildVectorOperation(
-        name: String,
-        arguments: List<MathExpression>
-    ): VectorOperation {
-        throw OperationNotSupportedException("Cant build operations in variable builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in variable builder")
     }
 }

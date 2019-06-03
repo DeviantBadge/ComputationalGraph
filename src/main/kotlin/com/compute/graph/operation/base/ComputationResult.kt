@@ -4,24 +4,41 @@ import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 import org.apache.commons.math3.linear.RealVector
 
-sealed class ComputationResult
+sealed class ComputationResult {
+    abstract override fun toString(): String
+}
 
 // todo mb its better to create lists
 class ScalarComputationResult(
-    var value: Double
-) : ComputationResult()
+    val value: Double
+) : ComputationResult() {
+
+    override fun toString(): String = value.toString()
+}
 
 class VectorComputationResult(
-    var value: RealVector
-) : ComputationResult()
+    val value: RealVector
+) : ComputationResult() {
+
+    override fun toString(): String = value.toString()
+}
 
 class MatrixComputationResult(
-    var value: RealMatrix
-) : ComputationResult()
+    val value: RealMatrix
+) : ComputationResult() {
 
+    override fun toString(): String = value.toString()
+}
+
+// todo may be make it immutable?
 class MultipleResult(
     /**
      * Function name mapped to diff result
      */
-    val map: MutableMap<String, ComputationResult>
-) : ComputationResult()
+    val results: MutableMap<String, ComputationResult>
+) : ComputationResult() {
+
+    override fun toString(): String = results.entries.joinToString(prefix = "All multiple values:\n", separator = "\n") {
+        "%-5s  ->   %s".format(it.key, it.value.toString())
+    }
+}

@@ -1,15 +1,8 @@
 package com.compute.graph.operation.objects.constants
 
-import com.compute.graph.operation.base.BinaryOperation
-import com.compute.graph.operation.base.IndependentOperand
-import com.compute.graph.operation.base.IndependentOperation
-import com.compute.graph.operation.base.MathExpression
-import com.compute.graph.operation.base.TernaryOperation
-import com.compute.graph.operation.base.UnaryOperation
-import com.compute.graph.operation.base.VectorOperation
+import com.compute.graph.operation.base.*
 import com.compute.graph.operation.base.builders.BaseBuilder
 import javax.naming.OperationNotSupportedException
-import kotlin.reflect.KClass
 
 /**
  * <p>Description:</P>
@@ -24,7 +17,7 @@ object ConstantBuilder : BaseBuilder() {
     override fun buildIndependentOperation(
         name: String
     ): IndependentOperation {
-        throw OperationNotSupportedException("Cant build operations in constants builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in constants builder")
     }
 
     override fun buildIndependentOperand(
@@ -40,7 +33,7 @@ object ConstantBuilder : BaseBuilder() {
         name: String,
         argument: MathExpression
     ): UnaryOperation {
-        throw OperationNotSupportedException("Cant build operations in constants builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in constants builder")
     }
 
     override fun buildBinaryOperation(
@@ -48,23 +41,7 @@ object ConstantBuilder : BaseBuilder() {
         leftArgument: MathExpression,
         rightArgument: MathExpression
     ): BinaryOperation {
-        throw OperationNotSupportedException("Cant build operations in constants builder")
-    }
-
-    override fun buildTernaryOperation(
-        name: String,
-        leftArgument: MathExpression,
-        middleArgument: MathExpression,
-        rightArgument: MathExpression
-    ): TernaryOperation {
-        throw OperationNotSupportedException("Cant build operations in constants builder")
-    }
-
-    override fun buildVectorOperation(
-        name: String,
-        arguments: List<MathExpression>
-    ): VectorOperation {
-        throw OperationNotSupportedException("Cant build operations in constants builder")
+        throw OperationNotSupportedException("Cant buildArgs operations in constants builder")
     }
 
     override fun isRegistered(name: String): Boolean {

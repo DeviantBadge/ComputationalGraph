@@ -1,21 +1,28 @@
 package com.compute.graph.operation.objects.variables
 
 import com.compute.graph.operation.annotations.Variable
+import com.compute.graph.operation.base.ComputationResult
 import com.compute.graph.operation.base.IndependentOperand
+import com.compute.graph.operation.base.MultipleResult
 import com.compute.graph.operation.interfaces.ExpressionArgs
+import com.compute.graph.operation.interfaces.ExpressionContext
+import java.lang.IllegalArgumentException
 
 @Variable
 class ScalarVariable(
     private val name: String
 ) : IndependentOperand() {
 
-    override fun compute(args: ExpressionArgs): Double {
-        return args[name] ?: throw IllegalArgumentException("Arguments do not contain variable with name $name. " +
-            "It contains only ${args.names.joinToString(prefix = "[", postfix = "]")}")
+    override fun computeResult(context: ExpressionContext): ComputationResult =
+        context[name] ?: throw IllegalArgumentException("No argument value found for variable $name in $context")
+
+    override fun differentiateForward(args: ExpressionArgs): MultipleResult {
+        TODO("Function \"${javaClass.name}.differentiateForward\" not implemented")
     }
 
-    override fun differentiate(varName: String, args: ExpressionArgs): Double =
-        if (name == varName) 1.0 else 0.0
+    override fun differentiateBackward(args: ExpressionArgs): MultipleResult {
+        TODO("Function \"${javaClass.name}.differentiateBackward\" not implemented")
+    }
 
     override fun toString(): String {
         return name
