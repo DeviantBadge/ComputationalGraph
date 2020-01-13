@@ -1,6 +1,6 @@
 package com.compute.graph.operations.builders.interfaces
 
-import com.compute.graph.operations.base.MathExpression
+import com.compute.graph.operations.objects.MathExpression
 import kotlin.reflect.KClass
 
 /**

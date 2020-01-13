@@ -1,6 +1,7 @@
 package com.compute.graph.operations.builders.interfaces
 
 import com.compute.graph.operations.base.*
+import com.compute.graph.operations.objects.MathExpression
 import kotlin.reflect.KClass
 
 /**
@@ -20,11 +21,6 @@ interface OperationBuilder {
         name: String
     ): IndependentOperand =
         build(IndependentOperand::class, name)
-
-    fun buildIndependentOperation(
-        name: String
-    ): IndependentOperation =
-        build(IndependentOperation::class, name)
 
     fun buildUnaryOperation(
         name: String,

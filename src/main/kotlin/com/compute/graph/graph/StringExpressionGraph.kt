@@ -14,7 +14,7 @@ class StringExpressionGraph(
     override var value: String = "",
     override val parents: MutableList<StringExpressionGraph> = mutableListOf(),
     override val children: MutableList<StringExpressionGraph> = mutableListOf()) :
-    DirectedGraphNode<String> {
+    GraphNode<String> {
 
     init {
         children.forEach {
@@ -167,7 +167,6 @@ class StringExpressionGraphListener : ExpressionBaseListener() {
         }
     }
 
-    // todo ended here
     override fun enterComposed_atom(ctx: ExpressionParser.Composed_atomContext) {
         result = StringExpressionGraphBuilder.build(ctx.getChild(0))
         when {

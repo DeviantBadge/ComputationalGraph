@@ -1,7 +1,5 @@
 package com.compute.graph.operations.objects
 
-import com.compute.graph.operations.base.MathExpression
-
 /**
  * @Author: evgeny
  * @Date: 2019-06-23

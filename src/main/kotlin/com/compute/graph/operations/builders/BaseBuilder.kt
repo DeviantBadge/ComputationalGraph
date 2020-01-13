@@ -1,10 +1,9 @@
 package com.compute.graph.operations.builders
 
-import com.compute.graph.operations.base.MathExpression
+import com.compute.graph.operations.objects.MathExpression
 import com.compute.graph.operations.builders.interfaces.OperationBuilder
 import com.compute.graph.operations.builders.interfaces.OperationRegistry
 import com.compute.graph.util.SealedHelper
-import com.compute.graph.util.extensions.logger
 import org.joor.Reflect
 import org.joor.ReflectException
 import java.lang.IllegalArgumentException
@@ -38,7 +37,7 @@ abstract class BaseBuilder : OperationBuilder, OperationRegistry {
         val exprNumber = sealedHelper.getSealedNumber(clazz)
         names.forEach { name ->
             registeredExpressions[exprNumber].put(name, clazz)?.also {
-                logger().warn("New object '${clazz.name}' hides previous one '${it.name}' for name '$name'")
+                print("New object '${clazz.name}' hides previous one '${it.name}' for name '$name'")
             }
         }
     }
@@ -48,8 +47,6 @@ abstract class BaseBuilder : OperationBuilder, OperationRegistry {
     //------------------------------------------------------------------------------------------------------------//
     // At this part we implement OperationBuilder methods
     //************************************************************************************************************//
-
-    // todo also try to generify this functions - too many of them + i use IndependentOperation::class manually
     override fun <T : MathExpression> build(
         exprType: KClass<T>,
         name: String,

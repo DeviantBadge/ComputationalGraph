@@ -1,6 +1,5 @@
 grammar Expression;
 // when changing this grammar file be shure, that nothing happens in StringExpressionGraphBuilder
-// todo mb use versions?
 
 @header {
     import java.util.HashMap;
@@ -40,10 +39,6 @@ expr_in_brackets:
     | L_SQUARE_BR expression R_SQUARE_BR
     | L_FIGURE_BR expression R_FIGURE_BR
     | ABS_BR expression ABS_BR;
-//square_brackets:
-//    L_SQUARE_BR expression R_SQUARE_BR
-//figure_brackets
-//    L_FIGURE_BR expression R_FIGURE_BR
 
 number:
     SCIENTIFIC_NUMBER | FLOAT_NUMBER | INT_NUMBER;

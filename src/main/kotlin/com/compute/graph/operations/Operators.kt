@@ -1,5 +1,9 @@
 package com.compute.graph.operations
 
+// what i want?
+// i want to have functions that will handle operations like sin(t)
+// also i want differentiation
+
 /*
 math operators
 

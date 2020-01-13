@@ -6,8 +6,14 @@ import com.compute.graph.antlr.ExpressionLexer
 import com.compute.graph.antlr.ExpressionParser
 import com.compute.graph.operations.annotations.*
 import com.compute.graph.operations.annotations.Function
-import com.compute.graph.operations.base.MathExpression
+import com.compute.graph.operations.objects.MathExpression
 import com.compute.graph.operations.builders.*
+import com.compute.graph.operations.dsl.operations.binary.operators.times
+import com.compute.graph.operations.dsl.operations.unary.functions.cos
+import com.compute.graph.operations.dsl.operations.unary.functions.sin
+import com.compute.graph.operations.dsl.operations.unary.operators.unaryMinus
+import com.compute.graph.operations.objects.MathObject
+import com.compute.graph.operations.objects.operands.Variable
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
 import org.antlr.v4.runtime.CharStreams
@@ -17,8 +23,8 @@ import org.antlr.v4.runtime.tree.ErrorNode
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.RuleNode
 import org.antlr.v4.runtime.tree.TerminalNode
-import kotlin.math.PI
-import kotlin.math.sin
+import kotlin.math.cos as cos_double
+import kotlin.math.sin as sin_double
 
 internal object StringToExpressionBuilder {
     init {
@@ -65,6 +71,7 @@ internal object StringToExpressionBuilder {
             .scan()
             .use {
                 it.allClasses.filter { classInfo ->
+
                     annotations.all { annotationName -> classInfo.hasAnnotation(annotationName) }
                         && implementedInterfaces.all { interfaceName -> classInfo.implementsInterface(interfaceName) }
                         && extendsClasses.all { className -> classInfo.extendsSuperclass(className) }
@@ -96,7 +103,7 @@ internal object StringToExpressionBuilder {
                     ConstantBuilder.register(it, res)
                 }
         }
-        if (clazz.hasAnnotation(Variable::class.qualifiedName)) {
+        if (clazz.hasAnnotation(VariableDeclaration::class.qualifiedName)) {
             // todo what to do here
         }
     }
@@ -271,9 +278,8 @@ internal class ExpressionGraphListener(
 }
 
 fun main() {
-    val expr = StringToExpressionBuilder.build("2*x+ 33 + sin(pi*x) / pi")
-    println(expr.compute(ArgsBuilder.buildContext { "x" to 3.0 }))
-
-    println()
-    println(sin(3 * PI))
+    val x = Variable("x")
+    val a: MathObject = -sin(x) * cos(x)
+//    println(a.diff(ArgsBuilder.buildContext { x to 10 }))
+    println(-cos_double(10.0) * cos_double(10.0) + sin_double(10.0) * sin_double(10.0))
 }

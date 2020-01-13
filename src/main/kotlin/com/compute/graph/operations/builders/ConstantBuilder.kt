@@ -1,7 +1,9 @@
 package com.compute.graph.operations.builders
 
-import com.compute.graph.operations.base.*
-import com.compute.graph.operations.objects.constants.ScalarConstant
+import com.compute.graph.operations.base.BinaryOperation
+import com.compute.graph.operations.base.IndependentOperand
+import com.compute.graph.operations.objects.MathExpression
+import com.compute.graph.operations.base.UnaryOperation
 import javax.naming.OperationNotSupportedException
 
 /**
@@ -14,19 +16,10 @@ import javax.naming.OperationNotSupportedException
 
 object ConstantBuilder : BaseBuilder() {
 
-    override fun buildIndependentOperation(
-        name: String
-    ): IndependentOperation {
-        throw OperationNotSupportedException("Cant buildArgs operations in constants builder")
-    }
-
     override fun buildIndependentOperand(
         name: String
     ): IndependentOperand {
-        name.toDoubleOrNull()?.let {
-            return ScalarConstant(it)
-        }
-        return super.buildIndependentOperand(name)
+        TODO()
     }
 
     override fun buildUnaryOperation(
