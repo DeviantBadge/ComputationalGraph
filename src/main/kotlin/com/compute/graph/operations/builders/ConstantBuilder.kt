@@ -1,9 +1,9 @@
 package com.compute.graph.operations.builders
 
-import com.compute.graph.operations.base.BinaryOperation
-import com.compute.graph.operations.base.IndependentOperand
+import com.compute.graph.operations.objects.BinaryOperation
+import com.compute.graph.operations.objects.IndependentOperand
 import com.compute.graph.operations.objects.MathExpression
-import com.compute.graph.operations.base.UnaryOperation
+import com.compute.graph.operations.objects.UnaryOperation
 import javax.naming.OperationNotSupportedException
 
 /**

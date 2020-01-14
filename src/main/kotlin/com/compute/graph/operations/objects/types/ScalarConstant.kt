@@ -11,8 +11,4 @@ open class ScalarConstant(
 ) : Scalar() {
     override val value: Double = value.toDouble()
     override val shape = ScalarShape
-
-    override fun toString(): String {
-        return value.toString()
-    }
 }

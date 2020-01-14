@@ -9,8 +9,9 @@ import com.compute.graph.operations.objects.Shape
  * @Date: 2019-07-29
  */
 class GradientImpl(
-    private val differentials: MutableMap<String, MathObject> = mutableMapOf()
+    private val differentials: MutableMap<String, MathObject>
 ) : Gradient(), Map<String, MathObject> by differentials {
+    constructor(vararg pairs: Pair<String, MathObject>): this(mutableMapOf(*pairs))
 
     override val shape: Shape
         get() = TODO("Property \"${javaClass.name}.shape\" not implemented")
@@ -20,8 +21,5 @@ class GradientImpl(
 
     override fun get(key: String): MathObject =
         differentials[key] ?: ScalarConstant(0)
-
-    override fun toString(): String =
-        TODO()
 }
 

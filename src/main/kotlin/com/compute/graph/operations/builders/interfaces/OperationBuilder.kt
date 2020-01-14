@@ -1,7 +1,10 @@
 package com.compute.graph.operations.builders.interfaces
 
 import com.compute.graph.operations.base.*
+import com.compute.graph.operations.objects.BinaryOperation
+import com.compute.graph.operations.objects.IndependentOperand
 import com.compute.graph.operations.objects.MathExpression
+import com.compute.graph.operations.objects.UnaryOperation
 import kotlin.reflect.KClass
 
 /**

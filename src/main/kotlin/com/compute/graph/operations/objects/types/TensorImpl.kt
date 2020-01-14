@@ -39,8 +39,4 @@ class TensorImpl(
 
     override operator fun get(number: Int): AlgebraicType =
         values[number]
-
-
-    override fun toString(): String =
-        TODO()
 }

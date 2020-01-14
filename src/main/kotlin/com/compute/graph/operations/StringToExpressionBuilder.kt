@@ -6,14 +6,21 @@ import com.compute.graph.antlr.ExpressionLexer
 import com.compute.graph.antlr.ExpressionParser
 import com.compute.graph.operations.annotations.*
 import com.compute.graph.operations.annotations.Function
-import com.compute.graph.operations.objects.MathExpression
-import com.compute.graph.operations.builders.*
+import com.compute.graph.operations.builders.ConstantBuilder
+import com.compute.graph.operations.builders.FunctionBuilder
+import com.compute.graph.operations.builders.OperatorBuilder
+import com.compute.graph.operations.builders.VariableBuilder
+import com.compute.graph.operations.builders.contexts.ArgsBuilder
 import com.compute.graph.operations.dsl.operations.binary.operators.times
 import com.compute.graph.operations.dsl.operations.unary.functions.cos
 import com.compute.graph.operations.dsl.operations.unary.functions.sin
 import com.compute.graph.operations.dsl.operations.unary.operators.unaryMinus
+import com.compute.graph.operations.objects.MathExpression
 import com.compute.graph.operations.objects.MathObject
-import com.compute.graph.operations.objects.operands.Variable
+import com.compute.graph.operations.objects.Variable
+import com.compute.graph.operations.visitors.differentiation.BackwardDifferentialVisitor
+import com.compute.graph.operations.visitors.differentiation.ForwardDifferentialVisitor
+import com.compute.graph.operations.visitors.execution.ComputationVisitor
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
 import org.antlr.v4.runtime.CharStreams
@@ -279,7 +286,17 @@ internal class ExpressionGraphListener(
 
 fun main() {
     val x = Variable("x")
-    val a: MathObject = -sin(x) * cos(x)
-//    println(a.diff(ArgsBuilder.buildContext { x to 10 }))
-    println(-cos_double(10.0) * cos_double(10.0) + sin_double(10.0) * sin_double(10.0))
+    val y = Variable("y")
+    val a: MathObject = -sin(x) * cos(y)
+    val computer = ComputationVisitor(a)
+    val differentiatorF = ForwardDifferentialVisitor(a)
+    val differentiatorB = BackwardDifferentialVisitor(a)
+
+    println(computer.compute(ArgsBuilder.buildArgs { x to 10; y to 20 }))
+    println(-sin_double(10.0) * cos_double(20.0))
+
+    println(differentiatorF.compute(ArgsBuilder.buildArgs { x to 10; y to 20 }))
+    println(differentiatorB.compute(ArgsBuilder.buildArgs { x to 10; y to 20 }))
+    println(-cos_double(10.0) * cos_double(20.0))
+    println(sin_double(10.0) * sin_double(20.0))
 }

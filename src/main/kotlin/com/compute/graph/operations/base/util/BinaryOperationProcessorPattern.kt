@@ -1,14 +1,7 @@
 package com.compute.graph.operations.base.util
 
-import com.compute.graph.operations.base.BinaryOperation
-import com.compute.graph.operations.objects.MathExpression
 import com.compute.graph.operations.interfaces.computers.binary.BinaryOperationProcessor
-import com.compute.graph.operations.objects.Gradient
-import com.compute.graph.operations.objects.MathObject
-import com.compute.graph.operations.objects.Scalar
-import com.compute.graph.operations.objects.Tensor
-import com.compute.graph.operations.objects.ScalarShape
-import com.compute.graph.operations.objects.Shape
+import com.compute.graph.operations.objects.*
 import com.compute.graph.util.extensions.mapGradientValues
 import com.compute.graph.util.extensions.mapGradientValuesWith
 
@@ -32,6 +25,7 @@ abstract class BinaryOperationProcessorPattern
 
     override fun buildExpression(leftVal: MathObject, rightVal: MathObject): MathExpression =
         BinaryOperation(leftVal, rightVal, this)
+
 
     override fun computeResult(leftArg: Tensor, rightArg: Scalar): MathObject =
         TODO("Implement Computation 'for_all in tensor'")
@@ -59,38 +53,42 @@ abstract class BinaryOperationProcessorPattern
     // Pre defined functions for shape
     // *******************************************************************************************
 
-    final override fun computeShape(
-        leftVal: MathObject,
-        rightVal: MathObject
-    ): Shape =
-        super.computeShape(leftVal, rightVal)
-
-    abstract override fun computeShape(leftArg: Tensor, rightArg: Tensor): Shape
-
-    override fun computeShape(leftArg: Scalar, rightArg: Scalar): Shape =
+    override fun computeShape(leftArg: ScalarShape, rightArg: ScalarShape): Shape =
         ScalarShape
 
-    override fun computeShape(leftArg: Tensor, rightArg: Scalar): Shape =
-        leftArg.shape
+    override fun computeShape(leftArg: ScalarShape, rightArg: TensorShape): Shape =
+        rightArg
 
-    override fun computeShape(leftArg: Scalar, rightArg: Tensor): Shape =
-        rightArg.shape
+    override fun computeShape(leftArg: ScalarShape, rightArg: GradientShape): Shape =
+        rightArg
 
-    override fun computeShape(leftArg: Gradient, rightArg: Scalar): Shape =
-        leftArg.shape
+    override fun computeShape(leftArg: ScalarShape, rightArg: UnknownExpressionShape): Shape =
+        rightArg
 
-    override fun computeShape(leftArg: Scalar, rightArg: Gradient): Shape =
-        rightArg.shape
+    override fun computeShape(leftArg: TensorShape, rightArg: ScalarShape): Shape =
+        leftArg
 
-    override fun computeShape(leftArg: Gradient, rightArg: Tensor): Shape =
-        TODO("Implement gradient shape")
+    override fun computeShape(leftArg: TensorShape, rightArg: TensorShape): Shape = TODO()
 
-    override fun computeShape(leftArg: Tensor, rightArg: Gradient): Shape =
-        TODO("Implement gradient shape")
+    override fun computeShape(leftArg: TensorShape, rightArg: GradientShape): Shape = TODO()
 
-    override fun computeShape(leftArg: Gradient, rightArg: Gradient): Shape =
-        TODO("Implement gradient shape")
+    override fun computeShape(leftArg: TensorShape, rightArg: UnknownExpressionShape): Shape = TODO()
 
+    override fun computeShape(leftArg: GradientShape, rightArg: ScalarShape): Shape = TODO()
+
+    override fun computeShape(leftArg: GradientShape, rightArg: TensorShape): Shape = TODO()
+
+    override fun computeShape(leftArg: GradientShape, rightArg: GradientShape): Shape = TODO()
+
+    override fun computeShape(leftArg: GradientShape, rightArg: UnknownExpressionShape): Shape = TODO()
+
+    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: ScalarShape): Shape = TODO()
+
+    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: TensorShape): Shape = TODO()
+
+    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: GradientShape): Shape = TODO()
+
+    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: UnknownExpressionShape): Shape = TODO()
 
     // *******************************************************************************************
     // Pre defined functions for derivatives

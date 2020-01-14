@@ -21,15 +21,11 @@ object MulProcessor : BinaryOperationProcessorPattern() {
     override fun computeResult(leftArg: Scalar, rightArg: Scalar): MathObject =
         ScalarConstant(leftArg.value * rightArg.value)
 
-    override fun computeShape(leftArg: Tensor, rightArg: Tensor): Shape {
-        TODO("Function \"${javaClass.name}.computeShape\" not implemented")
-    }
-
     override fun computeLeftArgDerivative(leftArg: MathObject, rightArg: MathObject): MathObject =
-        leftArg
+        rightArg
 
     override fun computeRightArgDerivative(leftArg: MathObject, rightArg: MathObject): MathObject =
-        rightArg
+        leftArg
 }
 
 operator fun MathObject.times(divisor: MathObject): MathObject =

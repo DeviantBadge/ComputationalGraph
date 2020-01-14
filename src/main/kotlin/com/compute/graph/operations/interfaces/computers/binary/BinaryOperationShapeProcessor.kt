@@ -1,10 +1,6 @@
 package com.compute.graph.operations.interfaces.computers.binary
 
-import com.compute.graph.operations.objects.Gradient
-import com.compute.graph.operations.objects.MathObject
-import com.compute.graph.operations.objects.Scalar
-import com.compute.graph.operations.objects.Tensor
-import com.compute.graph.operations.objects.Shape
+import com.compute.graph.operations.objects.*
 import kotlin.reflect.jvm.jvmName
 
 /**
@@ -13,78 +9,119 @@ import kotlin.reflect.jvm.jvmName
  */
 interface BinaryOperationShapeProcessor {
     fun computeShape(
-        leftVal: MathObject,
-        rightVal: MathObject
+        leftVal: Shape,
+        rightVal: Shape
     ): Shape =
         when (leftVal) {
-            is Gradient ->
+            is GradientShape ->
                 when (rightVal) {
-                    is Tensor -> computeShape(leftVal, rightVal)
-                    is Gradient -> computeShape(leftVal, rightVal)
-                    is Scalar -> computeShape(leftVal, rightVal)
-                    else -> throw IllegalArgumentException("Unexpected argument type ${rightVal::class.jvmName}")
+                    is TensorShape -> computeShape(leftVal, rightVal)
+                    is GradientShape -> computeShape(leftVal, rightVal)
+                    is ScalarShape -> computeShape(leftVal, rightVal)
+                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
                 }
-            is Tensor ->
+            is TensorShape ->
                 when (rightVal) {
-                    is Tensor -> computeShape(leftVal, rightVal)
-                    is Gradient -> computeShape(leftVal, rightVal)
-                    is Scalar -> computeShape(leftVal, rightVal)
-                    else -> throw IllegalArgumentException("Unexpected argument type ${rightVal::class.jvmName}")
+                    is TensorShape -> computeShape(leftVal, rightVal)
+                    is GradientShape -> computeShape(leftVal, rightVal)
+                    is ScalarShape -> computeShape(leftVal, rightVal)
+                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
                 }
-            is Scalar ->
+            is ScalarShape ->
                 when (rightVal) {
-                    is Tensor -> computeShape(leftVal, rightVal)
-                    is Gradient -> computeShape(leftVal, rightVal)
-                    is Scalar -> computeShape(leftVal, rightVal)
-                    else -> throw IllegalArgumentException("Unexpected argument type ${rightVal::class.jvmName}")
+                    is TensorShape -> computeShape(leftVal, rightVal)
+                    is GradientShape -> computeShape(leftVal, rightVal)
+                    is ScalarShape -> computeShape(leftVal, rightVal)
+                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
                 }
-
-            else -> throw IllegalArgumentException("Unexpected argument type ${leftVal::class.jvmName}")
+            is UnknownExpressionShape ->
+                when (rightVal) {
+                    is TensorShape -> computeShape(leftVal, rightVal)
+                    is GradientShape -> computeShape(leftVal, rightVal)
+                    is ScalarShape -> computeShape(leftVal, rightVal)
+                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
+                }
         }
 
     fun computeShape(
-        leftArg: Tensor,
-        rightArg: Tensor
+        leftArg: TensorShape,
+        rightArg: TensorShape
     ): Shape
 
     fun computeShape(
-        leftArg: Scalar,
-        rightArg: Scalar
+        leftArg: ScalarShape,
+        rightArg: ScalarShape
     ): Shape
 
     fun computeShape(
-        leftArg: Tensor,
-        rightArg: Scalar
+        leftArg: TensorShape,
+        rightArg: ScalarShape
     ): Shape
 
     fun computeShape(
-        leftArg: Scalar,
-        rightArg: Tensor
+        leftArg: ScalarShape,
+        rightArg: TensorShape
     ): Shape
 
 
     fun computeShape(
-        leftArg: Tensor,
-        rightArg: Gradient
+        leftArg: TensorShape,
+        rightArg: GradientShape
     ): Shape
 
     fun computeShape(
-        leftArg: Gradient,
-        rightArg: Tensor
+        leftArg: GradientShape,
+        rightArg: TensorShape
     ): Shape
 
     fun computeShape(
-        leftArg: Scalar,
-        rightArg: Gradient
+        leftArg: ScalarShape,
+        rightArg: GradientShape
     ): Shape
 
     fun computeShape(
-        leftArg: Gradient,
-        rightArg: Scalar
+        leftArg: GradientShape,
+        rightArg: ScalarShape
     ): Shape
 
     fun computeShape(
-        leftArg: Gradient,
-        rightArg: Gradient
+        leftArg: GradientShape,
+        rightArg: GradientShape
+    ): Shape
+
+
+    fun computeShape(
+        leftArg: UnknownExpressionShape,
+        rightArg: ScalarShape
+    ): Shape
+
+    fun computeShape(
+        leftArg: UnknownExpressionShape,
+        rightArg: TensorShape
+    ): Shape
+
+    fun computeShape(
+        leftArg: UnknownExpressionShape,
+        rightArg: GradientShape
+    ): Shape
+
+    fun computeShape(
+        leftArg: ScalarShape,
+        rightArg: UnknownExpressionShape
+    ): Shape
+
+    fun computeShape(
+        leftArg: TensorShape,
+        rightArg: UnknownExpressionShape
+    ): Shape
+
+    fun computeShape(
+        leftArg: GradientShape,
+        rightArg: UnknownExpressionShape
+    ): Shape
+
+    fun computeShape(
+        leftArg: UnknownExpressionShape,
+        rightArg: UnknownExpressionShape
     ): Shape
 }

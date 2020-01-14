@@ -10,7 +10,7 @@ sealed class AlgebraicShape: Shape()
 
 object ScalarShape: AlgebraicShape()
 
-object UnknownShape: Shape()
+class UnknownExpressionShape: Shape()
 
 class TensorShape(
     val shape: List<Int>

@@ -2,9 +2,8 @@ package com.compute.graph.operations.builders.contexts
 
 import com.compute.graph.operations.interfaces.arguments.ComputationArgs
 import com.compute.graph.operations.objects.MathObject
-import com.compute.graph.operations.objects.Tensor
+import com.compute.graph.operations.objects.Variable
 import com.compute.graph.operations.objects.arguments.ComputationArgsImpl
-import com.compute.graph.operations.objects.operands.Variable
 import com.compute.graph.operations.objects.types.ScalarConstant
 
 /**

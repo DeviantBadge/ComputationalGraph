@@ -1,13 +1,7 @@
 package com.compute.graph.operations.base.util
 
-import com.compute.graph.operations.objects.MathExpression
-import com.compute.graph.operations.base.UnaryOperation
 import com.compute.graph.operations.interfaces.computers.unary.UnaryOperationProcessor
-import com.compute.graph.operations.objects.Gradient
-import com.compute.graph.operations.objects.MathObject
-import com.compute.graph.operations.objects.Scalar
-import com.compute.graph.operations.objects.Tensor
-import com.compute.graph.operations.objects.Shape
+import com.compute.graph.operations.objects.*
 import com.compute.graph.util.extensions.mapGradientValues
 
 /**
@@ -47,6 +41,9 @@ abstract class UnaryOperationProcessorPattern :
         arg.shape
 
     override fun computeShape(arg: Gradient): Shape =
+        arg.shape
+
+    override fun computeShape(arg: MathExpression): Shape =
         arg.shape
 
 

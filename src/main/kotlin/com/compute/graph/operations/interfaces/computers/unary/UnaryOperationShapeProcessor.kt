@@ -1,10 +1,6 @@
 package com.compute.graph.operations.interfaces.computers.unary
 
-import com.compute.graph.operations.objects.Gradient
-import com.compute.graph.operations.objects.MathObject
-import com.compute.graph.operations.objects.Scalar
-import com.compute.graph.operations.objects.Tensor
-import com.compute.graph.operations.objects.Shape
+import com.compute.graph.operations.objects.*
 import kotlin.reflect.jvm.jvmName
 
 /**
@@ -19,7 +15,7 @@ interface UnaryOperationShapeProcessor {
             is Gradient -> computeShape(argVal)
             is Tensor -> computeShape(argVal)
             is Scalar -> computeShape(argVal)
-            else -> throw IllegalArgumentException("Unexpected argument type ${argVal::class.jvmName}")
+            is MathExpression -> computeShape(argVal)
         }
 
     fun computeShape(arg: Tensor): Shape
@@ -27,4 +23,6 @@ interface UnaryOperationShapeProcessor {
     fun computeShape(arg: Scalar): Shape
 
     fun computeShape(arg: Gradient): Shape
+
+    fun computeShape(arg: MathExpression): Shape
 }

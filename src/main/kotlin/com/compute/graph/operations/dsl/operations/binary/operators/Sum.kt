@@ -18,11 +18,6 @@ object SumProcessor : BinaryOperationProcessorPattern() {
     override fun computeResult(leftArg: Scalar, rightArg: Scalar): MathObject =
         ScalarConstant(leftArg.value + rightArg.value)
 
-
-    override fun computeShape(leftArg: Tensor, rightArg: Tensor): Shape {
-        TODO("Function \"${javaClass.name}.computeShape\" not implemented")
-    }
-
     override fun computeLeftArgDerivative(leftArg: MathObject, rightArg: MathObject): MathObject =
         ScalarConstant(1.0)
 
