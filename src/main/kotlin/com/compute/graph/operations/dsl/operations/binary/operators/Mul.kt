@@ -1,10 +1,12 @@
 package com.compute.graph.operations.dsl.operations.binary.operators
 
-import com.compute.graph.operations.base.util.BinaryOperationProcessorPattern
+import com.compute.graph.operations.base.util.BinaryOperationCorePattern
+import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
+import com.compute.graph.operations.interfaces.core.binary.LEFT_ARGUMENT_PATTERN
+import com.compute.graph.operations.interfaces.core.binary.RIGHT_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
 import com.compute.graph.operations.objects.Tensor
-import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.types.ScalarConstant
 import com.compute.graph.util.extensions.compute
 
@@ -13,7 +15,7 @@ import com.compute.graph.util.extensions.compute
  * @Date: 2019-07-25
  */
 
-object MulProcessor : BinaryOperationProcessorPattern() {
+object MulCore : BinaryOperationCorePattern() {
     override fun computeResult(leftArg: Tensor, rightArg: Tensor): MathObject =
         TODO("Function \"${javaClass.name}.computeResult\" not implemented")
 
@@ -26,13 +28,20 @@ object MulProcessor : BinaryOperationProcessorPattern() {
 
     override fun computeRightArgDerivative(leftArg: MathObject, rightArg: MathObject): MathObject =
         leftArg
+
+    // todo - with some shape conditions this operation is commutative
+    override val isCommutative: Boolean = false
+    override val isAntiCommutative: Boolean = false
+    override val isAssociative: Boolean = true
+    override val toStringPattern: String = "$LEFT_ARGUMENT_PATTERN*$RIGHT_ARGUMENT_PATTERN"
+    override val operationPriority: Int = PriorityCommonLevels.MULTIPLICATIVE
 }
 
 operator fun MathObject.times(divisor: MathObject): MathObject =
-    MulProcessor.computeResult(this, divisor)
+    MulCore.computeResult(this, divisor)
 
 operator fun Number.times(divisor: MathObject): MathObject =
-    MulProcessor.compute(this, divisor)
+    MulCore.compute(this, divisor)
 
 operator fun MathObject.times(divisor: Number): MathObject =
-    MulProcessor.compute(this, divisor)
+    MulCore.compute(this, divisor)

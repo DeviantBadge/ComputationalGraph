@@ -1,13 +1,13 @@
 package com.compute.graph.operations.base.util
 
-import com.compute.graph.operations.interfaces.computers.binary.BinaryOperationProcessor
+import com.compute.graph.operations.interfaces.core.binary.BinaryOperationCore
 import com.compute.graph.operations.objects.*
 import com.compute.graph.util.extensions.mapGradientValues
 import com.compute.graph.util.extensions.mapGradientValuesWith
 
 
-abstract class BinaryOperationProcessorPattern
-    : BinaryOperationProcessor {
+abstract class BinaryOperationCorePattern
+    : BinaryOperationCore {
 
     // *******************************************************************************************
     // Pre defined functions for result
@@ -62,7 +62,7 @@ abstract class BinaryOperationProcessorPattern
     override fun computeShape(leftArg: ScalarShape, rightArg: GradientShape): Shape =
         rightArg
 
-    override fun computeShape(leftArg: ScalarShape, rightArg: UnknownExpressionShape): Shape =
+    override fun computeShape(leftArg: ScalarShape, rightArg: MathExpressionShape): Shape =
         rightArg
 
     override fun computeShape(leftArg: TensorShape, rightArg: ScalarShape): Shape =
@@ -72,7 +72,7 @@ abstract class BinaryOperationProcessorPattern
 
     override fun computeShape(leftArg: TensorShape, rightArg: GradientShape): Shape = TODO()
 
-    override fun computeShape(leftArg: TensorShape, rightArg: UnknownExpressionShape): Shape = TODO()
+    override fun computeShape(leftArg: TensorShape, rightArg: MathExpressionShape): Shape = TODO()
 
     override fun computeShape(leftArg: GradientShape, rightArg: ScalarShape): Shape = TODO()
 
@@ -80,15 +80,15 @@ abstract class BinaryOperationProcessorPattern
 
     override fun computeShape(leftArg: GradientShape, rightArg: GradientShape): Shape = TODO()
 
-    override fun computeShape(leftArg: GradientShape, rightArg: UnknownExpressionShape): Shape = TODO()
+    override fun computeShape(leftArg: GradientShape, rightArg: MathExpressionShape): Shape = TODO()
 
-    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: ScalarShape): Shape = TODO()
+    override fun computeShape(leftArg: MathExpressionShape, rightArg: ScalarShape): Shape = TODO()
 
-    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: TensorShape): Shape = TODO()
+    override fun computeShape(leftArg: MathExpressionShape, rightArg: TensorShape): Shape = TODO()
 
-    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: GradientShape): Shape = TODO()
+    override fun computeShape(leftArg: MathExpressionShape, rightArg: GradientShape): Shape = TODO()
 
-    override fun computeShape(leftArg: UnknownExpressionShape, rightArg: UnknownExpressionShape): Shape = TODO()
+    override fun computeShape(leftArg: MathExpressionShape, rightArg: MathExpressionShape): Shape = TODO()
 
     // *******************************************************************************************
     // Pre defined functions for derivatives

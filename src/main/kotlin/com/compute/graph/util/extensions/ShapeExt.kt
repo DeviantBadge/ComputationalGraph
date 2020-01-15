@@ -1,7 +1,6 @@
 package com.compute.graph.util.extensions
 
-import com.compute.graph.operations.objects.TensorShape
-import com.compute.graph.operations.objects.TensorShapeBuilder
+import com.compute.graph.operations.objects.*
 
 /**
  * @Author: evgeny
@@ -10,5 +9,7 @@ import com.compute.graph.operations.objects.TensorShapeBuilder
 //val Tensor.dimension: Int?
 //    get() = shape?.firstOrNull()
 //
-val TensorShape.rank: Int
-    get() = shape.size
+fun AlgebraicShape.rank(): Int = when(this) {
+        is ScalarShape -> 0
+        is TensorShape -> this.shape.size
+    }

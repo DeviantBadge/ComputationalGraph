@@ -4,8 +4,7 @@ import com.compute.graph.operations.objects.*
 import com.compute.graph.operations.objects.operands.ExpConstant
 import com.compute.graph.operations.objects.operands.PiConstant
 import com.compute.graph.util.extensions.rank
-import java.lang.StringBuilder
-import kotlin.reflect.jvm.jvmName
+import com.compute.graph.util.extensions.useStringPattern
 
 /**
  * @Author: evgeny
@@ -75,10 +74,21 @@ object MathObjectPrinter {
         oneRowDimension: Int = 1,
         fromNewLine: Boolean = true
     ): String =
-        tabulation(printLevel) + when (expression) {
+        (if (fromNewLine) tabulation(printLevel) else "") + when (expression) {
             is Variable -> expression.name
-            else -> TODO()
+            is Constant -> toPrettyString(expression.value, printLevel, oneRowDimension, fromNewLine)
+            is UnaryOperation -> {
+                val argumentSubString = toPrettyString(expression.argument, printLevel, oneRowDimension, false)
+                expression.useStringPattern(argumentSubString)
+            }
+            is BinaryOperation -> {
+                val leftArgString = toPrettyString(expression.leftArgument, printLevel, oneRowDimension, false)
+                val rightArgString = toPrettyString(expression.rightArgument, printLevel, oneRowDimension, false)
+                expression.useStringPattern(leftArgString, rightArgString)
+            }
         }
+
+
 
     private fun tabulation(printLevel: Int): String = " ".repeat(4 * (printLevel))
 }

@@ -1,6 +1,6 @@
 package com.compute.graph.util.extensions
 
-import com.compute.graph.operations.interfaces.computers.binary.BinaryOperationResultProcessor
+import com.compute.graph.operations.interfaces.core.binary.BinaryOperationResultProcessor
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.types.ScalarConstant
 

@@ -1,4 +1,4 @@
-package com.compute.graph.operations.interfaces.computers.unary
+package com.compute.graph.operations.interfaces.core.unary
 
 import com.compute.graph.operations.objects.MathExpression
 import com.compute.graph.operations.objects.Gradient
@@ -13,16 +13,16 @@ import kotlin.reflect.jvm.jvmName
  */
 interface UnaryOperationResultProcessor {
     fun computeResult(
-        argVal: MathObject
+        arg: MathObject
     ): MathObject =
-        if (argVal is MathExpression) {
-            buildExpression(argVal)
+        if (arg is MathExpression) {
+            buildExpression(arg)
         } else {
-            when (argVal) {
-                is Gradient -> computeResult(argVal)
-                is Tensor -> computeResult(argVal)
-                is Scalar -> computeResult(argVal)
-                else -> throw IllegalArgumentException("Unexpected argument type ${argVal::class.jvmName}")
+            when (arg) {
+                is Gradient -> computeResult(arg)
+                is Tensor -> computeResult(arg)
+                is Scalar -> computeResult(arg)
+                else -> throw IllegalArgumentException("Unexpected argument type ${arg::class.jvmName}")
             }
         }
 

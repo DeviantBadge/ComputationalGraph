@@ -288,6 +288,8 @@ fun main() {
     val x = Variable("x")
     val y = Variable("y")
     val a: MathObject = -sin(x) * cos(y)
+    println(a)
+
     val computer = ComputationVisitor(a)
     val differentiatorF = ForwardDifferentialVisitor(a)
     val differentiatorB = BackwardDifferentialVisitor(a)
@@ -299,4 +301,6 @@ fun main() {
     println(differentiatorB.compute(ArgsBuilder.buildArgs { x to 10; y to 20 }))
     println(-cos_double(10.0) * cos_double(20.0))
     println(sin_double(10.0) * sin_double(20.0))
+
+    print(BackwardDifferentialVisitor(a).compute(diffVariables = *arrayOf(x)))
 }

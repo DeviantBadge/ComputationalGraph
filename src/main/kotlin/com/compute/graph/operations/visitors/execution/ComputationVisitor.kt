@@ -2,6 +2,7 @@ package com.compute.graph.operations.visitors.execution
 
 import com.compute.graph.operations.interfaces.arguments.ComputationArgs
 import com.compute.graph.operations.objects.*
+import com.compute.graph.operations.objects.arguments.ComputationArgsImpl
 import com.compute.graph.util.extensions.compute
 import com.compute.graph.util.extensions.toMathExpression
 
@@ -27,7 +28,7 @@ class ComputationVisitor(
         executionSequence: List<MathExpression> = listOf()
     ) : this(target.toMathExpression(), ComputedValues(computedValues), executionSequence)
 
-    fun compute(computationArgs: ComputationArgs): MathObject {
+    fun compute(computationArgs: ComputationArgs = ComputationArgsImpl()): MathObject {
         for (mathExpression in executionSequence) {
             computeVertexValue(mathExpression, computationArgs)
         }

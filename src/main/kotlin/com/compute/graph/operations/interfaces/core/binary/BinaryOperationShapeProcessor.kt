@@ -1,7 +1,6 @@
-package com.compute.graph.operations.interfaces.computers.binary
+package com.compute.graph.operations.interfaces.core.binary
 
 import com.compute.graph.operations.objects.*
-import kotlin.reflect.jvm.jvmName
 
 /**
  * @Author: evgeny
@@ -18,28 +17,28 @@ interface BinaryOperationShapeProcessor {
                     is TensorShape -> computeShape(leftVal, rightVal)
                     is GradientShape -> computeShape(leftVal, rightVal)
                     is ScalarShape -> computeShape(leftVal, rightVal)
-                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
+                    is MathExpressionShape -> computeShape(leftVal, rightVal)
                 }
             is TensorShape ->
                 when (rightVal) {
                     is TensorShape -> computeShape(leftVal, rightVal)
                     is GradientShape -> computeShape(leftVal, rightVal)
                     is ScalarShape -> computeShape(leftVal, rightVal)
-                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
+                    is MathExpressionShape -> computeShape(leftVal, rightVal)
                 }
             is ScalarShape ->
                 when (rightVal) {
                     is TensorShape -> computeShape(leftVal, rightVal)
                     is GradientShape -> computeShape(leftVal, rightVal)
                     is ScalarShape -> computeShape(leftVal, rightVal)
-                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
+                    is MathExpressionShape -> computeShape(leftVal, rightVal)
                 }
-            is UnknownExpressionShape ->
+            is MathExpressionShape ->
                 when (rightVal) {
                     is TensorShape -> computeShape(leftVal, rightVal)
                     is GradientShape -> computeShape(leftVal, rightVal)
                     is ScalarShape -> computeShape(leftVal, rightVal)
-                    is UnknownExpressionShape -> computeShape(leftVal, rightVal)
+                    is MathExpressionShape -> computeShape(leftVal, rightVal)
                 }
         }
 
@@ -91,37 +90,37 @@ interface BinaryOperationShapeProcessor {
 
 
     fun computeShape(
-        leftArg: UnknownExpressionShape,
+        leftArg: MathExpressionShape,
         rightArg: ScalarShape
     ): Shape
 
     fun computeShape(
-        leftArg: UnknownExpressionShape,
+        leftArg: MathExpressionShape,
         rightArg: TensorShape
     ): Shape
 
     fun computeShape(
-        leftArg: UnknownExpressionShape,
+        leftArg: MathExpressionShape,
         rightArg: GradientShape
     ): Shape
 
     fun computeShape(
         leftArg: ScalarShape,
-        rightArg: UnknownExpressionShape
+        rightArg: MathExpressionShape
     ): Shape
 
     fun computeShape(
         leftArg: TensorShape,
-        rightArg: UnknownExpressionShape
+        rightArg: MathExpressionShape
     ): Shape
 
     fun computeShape(
         leftArg: GradientShape,
-        rightArg: UnknownExpressionShape
+        rightArg: MathExpressionShape
     ): Shape
 
     fun computeShape(
-        leftArg: UnknownExpressionShape,
-        rightArg: UnknownExpressionShape
+        leftArg: MathExpressionShape,
+        rightArg: MathExpressionShape
     ): Shape
 }

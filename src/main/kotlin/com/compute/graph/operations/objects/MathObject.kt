@@ -1,7 +1,7 @@
 package com.compute.graph.operations.objects
 
-import com.compute.graph.operations.interfaces.computers.binary.BinaryOperationProcessor
-import com.compute.graph.operations.interfaces.computers.unary.UnaryOperationProcessor
+import com.compute.graph.operations.interfaces.core.binary.BinaryOperationCore
+import com.compute.graph.operations.interfaces.core.unary.UnaryOperationCore
 import com.compute.graph.util.MathObjectPrinter
 import com.compute.graph.util.extensions.toMathExpression
 
@@ -49,8 +49,9 @@ abstract class  Gradient: TechnicalType(),
 sealed class MathExpression: TechnicalType() {
     /**
      * Each expression can have parents. Storing them in 'parents' set
+     * todo implement scope of modifications
      */
-    abstract val parentExpressions: MutableSet<MathExpression>
+    val parentExpressions: MutableSet<MathExpression> = mutableSetOf<MathExpression>()
 
     /**
      * Add parent to expression if already not in it
@@ -70,10 +71,9 @@ sealed class MathExpression: TechnicalType() {
 class BinaryOperation(
     leftArgument: MathObject,
     rightArgument: MathObject,
-    val computer: BinaryOperationProcessor
+    val specification: BinaryOperationCore
 ) : MathExpression() {
-    override val shape: Shape = computer.computeShape(leftArgument.shape, rightArgument.shape)
-    override val parentExpressions = mutableSetOf<MathExpression>()
+    override val shape: Shape = specification.computeShape(leftArgument.shape, rightArgument.shape)
 
     val leftArgument: MathExpression =
         leftArgument.toMathExpression().also { it.addParent(this) }
@@ -83,22 +83,6 @@ class BinaryOperation(
 /*
     TODO make it extension function for expressions or special walker (?)
     override fun get(number: Int): MathObject
-
-    override fun computeValue(context: ComputationContext, partly: Boolean): MathObject =
-        computer.computeResult(leftArgument.compute(context, partly), rightArgument.compute(context, partly))
-
-    override fun diffForwardValue(diffContext: DifferentiationContext): Gradient {
-        val leftDiff =
-            computer.computeLeftArgDerivative(leftArgument.compute(diffContext.computationContext), rightArgument.compute(diffContext.computationContext))
-        val rightDiff =
-            computer.computeRightArgDerivative(leftArgument.compute(diffContext.computationContext), rightArgument.compute(diffContext.computationContext))
-        return (leftDiff * leftArgument.diffForward(diffContext) +
-            rightDiff * rightArgument.diffForward(diffContext))
-    }
-
-    override fun diffBackwardValue(diffContext: DifferentiationContext): Gradient {
-        TODO("Function \"${javaClass.name}.diffBackwardValue\" not implemented")
-    }
 */
 }
 
@@ -107,10 +91,9 @@ class BinaryOperation(
 // todo try with spring context and without it, how much efficiency we will waste with spring context?
 class UnaryOperation(
     argument: MathObject,
-    val computer: UnaryOperationProcessor
+    val specification: UnaryOperationCore
 ) : MathExpression() {
-    override val shape: Shape = computer.computeShape(argument)
-    override val parentExpressions = mutableSetOf<MathExpression>()
+    override val shape: Shape = specification.computeShape(argument.shape)
 
     val argument: MathExpression =
         argument.toMathExpression().also { it.addParent(this) }
@@ -118,19 +101,6 @@ class UnaryOperation(
     /*
     override fun get(number: Int): TensorExpression =
         TODO("Cant get i-th operation of pure expression")
-
-
-    override fun computeValue(context: ComputationContext, partly: Boolean): TensorExpression =
-        computer.computeResult(argument.compute(context, partly))
-
-    override fun diffForwardValue(diffContext: DifferentiationContext): Gradient =
-        (computer.derivative(argument.compute(diffContext.computationContext)) * argument.diffForward(diffContext))
-
-    override fun diffBackwardValue(diffContext: DifferentiationContext): Gradient {
-        TODO()
-//        diffContext.append(argument, computer.differential(argument.compute(diffContext.computationContext)) as Gradient)
-//        return diffContext[this]!!
-    }
     */
 }
 
@@ -139,20 +109,18 @@ sealed class IndependentOperand : MathExpression()
 class Constant internal constructor(
     val value: MathObject
 ) : IndependentOperand() {
-    override val parentExpressions: MutableSet<MathExpression> = mutableSetOf()
     override val shape: Shape
         get() = value.shape
 }
 
 
 open class Variable(
-    val name: String
+    val name: String,
+    shape: Shape = ScalarShape // todo here must be MathExpressionShape
 ) : IndependentOperand() {
 
-    override var shape: Shape = ScalarShape
+    override var shape: Shape = shape
         protected set
-
-    override val parentExpressions: MutableSet<MathExpression> = mutableSetOf()
 
     override fun hashCode(): Int {
         return name.hashCode()

@@ -1,4 +1,4 @@
-package com.compute.graph.operations.interfaces.computers.binary
+package com.compute.graph.operations.interfaces.core.binary
 
 import com.compute.graph.operations.objects.MathObject
 

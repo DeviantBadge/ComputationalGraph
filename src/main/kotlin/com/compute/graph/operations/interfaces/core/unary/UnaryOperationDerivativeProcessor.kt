@@ -1,4 +1,4 @@
-package com.compute.graph.operations.interfaces.computers.unary
+package com.compute.graph.operations.interfaces.core.unary
 
 import com.compute.graph.operations.objects.MathObject
 
@@ -7,5 +7,5 @@ import com.compute.graph.operations.objects.MathObject
  * @Date: 2019-07-22
  */
 interface UnaryOperationDerivativeProcessor {
-    fun derivative(arg: MathObject): MathObject
+    fun computeDerivative(arg: MathObject): MathObject
 }

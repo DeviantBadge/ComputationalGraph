@@ -4,6 +4,7 @@ import com.compute.graph.operations.dsl.operations.binary.operators.plus
 import com.compute.graph.operations.dsl.operations.binary.operators.times
 import com.compute.graph.operations.interfaces.arguments.ComputationArgs
 import com.compute.graph.operations.objects.*
+import com.compute.graph.operations.objects.arguments.ComputationArgsImpl
 import com.compute.graph.operations.objects.types.GradientImpl
 import com.compute.graph.operations.objects.types.ScalarConstant
 import com.compute.graph.operations.visitors.execution.ComputationVisitor
@@ -35,16 +36,27 @@ class BackwardDifferentialVisitor(
         executionSequence: List<MathExpression> = listOf()
     ) : this(target.toMathExpression(), ComputedValues(computedValues), ComputedValues(computedDerivatives), executionSequence)
 
-    fun compute(computationArgs: ComputationArgs): MathObject {
+    fun compute(
+        computationArgs: ComputationArgs = ComputationArgsImpl(),
+        vararg diffVariables: Variable
+    ): MathObject {
         preComputeVertexValues(computationArgs)
 
         for (mathExpression in executionSequence.reversed()) {
-            computeVertexValue(mathExpression, computationArgs)
+            computeVertexValue(mathExpression, computationArgs, *diffVariables)
         }
-        return result.toSortedMap().toGradient()
+        return if (result.size == 1 && diffVariables.size == 1) {
+            result.values.first()
+        } else {
+            result.toSortedMap().toGradient()
+        }
     }
 
-    private fun computeVertexValue(vertex: MathExpression, computationArgs: ComputationArgs) {
+    private fun computeVertexValue(
+        vertex: MathExpression,
+        computationArgs: ComputationArgs,
+        vararg diffVariables: Variable
+    ) {
         if (vertex is Constant) {
             return
         }
@@ -55,7 +67,7 @@ class BackwardDifferentialVisitor(
             computedDerivatives[vertex] = ScalarConstant(0)
         }
         loop_name@
-        for (parentExpression in vertex.parentExpressions) {
+        for (parentExpression in vertex.parentExpressions.intersect(executionSequence)) {
             when (parentExpression) {
                 is IndependentOperand -> continue@loop_name
                 is UnaryOperation -> addSubDerivative(vertex, parentExpression, computationArgs)
@@ -63,7 +75,7 @@ class BackwardDifferentialVisitor(
             }
         }
 
-        if (vertex is Variable) {
+        if (vertex is Variable && (diffVariables.isEmpty() || vertex in diffVariables)) {
             result[vertex.name] = result[vertex.name] + computedDerivatives[vertex]
         }
     }

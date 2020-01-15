@@ -4,7 +4,7 @@ import com.compute.graph.operations.interfaces.arguments.ComputationArgs
 import com.compute.graph.operations.objects.MathObject
 
 class ComputationArgsImpl(
-    private val arguments: Map<String, MathObject>
+    private val arguments: Map<String, MathObject> = mapOf()
 ) : ComputationArgs {
     override fun get(variableName: String): MathObject? =
         arguments[variableName]

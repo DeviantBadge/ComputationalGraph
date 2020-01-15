@@ -10,7 +10,7 @@ sealed class AlgebraicShape: Shape()
 
 object ScalarShape: AlgebraicShape()
 
-class UnknownExpressionShape: Shape()
+class MathExpressionShape: Shape()
 
 class TensorShape(
     val shape: List<Int>
@@ -28,7 +28,7 @@ class TensorShape(
 }
 
 class GradientShape(
-    val shape: Map<MathExpression, Shape>
+    val shape: Map<MathExpression, Shape> = mapOf()
 ): Shape() {
     override fun equals(other: Any?): Boolean {
         if (other is GradientShape) {
