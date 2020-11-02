@@ -2,10 +2,12 @@ package com.compute.graph.operations.dsl.operations.binary.operators
 
 import com.compute.graph.operations.base.util.BinaryOperationCorePattern
 import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
+import com.compute.graph.operations.interfaces.core.binary.AssociativityType
 import com.compute.graph.operations.interfaces.core.binary.LEFT_ARGUMENT_PATTERN
 import com.compute.graph.operations.interfaces.core.binary.RIGHT_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.Tensor
 import com.compute.graph.operations.objects.types.ScalarConstant
 import com.compute.graph.util.extensions.compute
@@ -28,7 +30,7 @@ object SumCore : BinaryOperationCorePattern() {
 
     override val isCommutative: Boolean = true
     override val isAntiCommutative: Boolean = false
-    override val isAssociative: Boolean = true
+    override val associativityType: AssociativityType = AssociativityType.LEFT
     override val toStringPattern: String = "$LEFT_ARGUMENT_PATTERN+$RIGHT_ARGUMENT_PATTERN"
     override val operationPriority: Int = PriorityCommonLevels.ADDITIVE
 }
@@ -41,3 +43,7 @@ operator fun Number.plus(divisor: MathObject): MathObject =
 
 operator fun MathObject.plus(divisor: Number): MathObject =
     SumCore.compute(this, divisor)
+
+
+operator fun Shape.plus(divisor: Shape): Shape =
+    SumCore.computeShape(this, divisor)

@@ -3,10 +3,12 @@ package com.compute.graph.operations.dsl.operations.binary.operators
 import com.compute.graph.operations.base.util.BinaryOperationCorePattern
 import com.compute.graph.operations.dsl.operations.unary.functions.ln
 import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
+import com.compute.graph.operations.interfaces.core.binary.AssociativityType
 import com.compute.graph.operations.interfaces.core.binary.LEFT_ARGUMENT_PATTERN
 import com.compute.graph.operations.interfaces.core.binary.RIGHT_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.Tensor
 import com.compute.graph.operations.objects.types.ScalarConstant
 import com.compute.graph.util.extensions.compute
@@ -30,7 +32,7 @@ object PowCore : BinaryOperationCorePattern() {
 
     override val isCommutative: Boolean = false
     override val isAntiCommutative: Boolean = false
-    override val isAssociative: Boolean = false
+    override val associativityType: AssociativityType = AssociativityType.RIGHT
     override val toStringPattern: String = "$LEFT_ARGUMENT_PATTERN^$RIGHT_ARGUMENT_PATTERN"
     override val operationPriority: Int = PriorityCommonLevels.POWER
 }
@@ -43,3 +45,7 @@ infix fun Number.pow(divisor: MathObject): MathObject =
 
 infix fun MathObject.pow(divisor: Number): MathObject =
     PowCore.compute(this, divisor)
+
+
+infix fun Shape.pow(divisor: Shape): Shape =
+    PowCore.computeShape(this, divisor)

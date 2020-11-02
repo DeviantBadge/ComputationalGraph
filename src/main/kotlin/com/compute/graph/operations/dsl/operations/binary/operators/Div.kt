@@ -2,6 +2,7 @@ package com.compute.graph.operations.dsl.operations.binary.operators
 
 import com.compute.graph.operations.base.util.BinaryOperationCorePattern
 import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
+import com.compute.graph.operations.interfaces.core.binary.AssociativityType
 import com.compute.graph.operations.interfaces.core.binary.LEFT_ARGUMENT_PATTERN
 import com.compute.graph.operations.interfaces.core.binary.RIGHT_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.*
@@ -29,7 +30,7 @@ object DivCore : BinaryOperationCorePattern() {
 
     override val isCommutative: Boolean = false
     override val isAntiCommutative: Boolean = false
-    override val isAssociative: Boolean = false
+    override val associativityType: AssociativityType = AssociativityType.LEFT
     override val toStringPattern: String = "$LEFT_ARGUMENT_PATTERN/$RIGHT_ARGUMENT_PATTERN"
     override val operationPriority: Int = PriorityCommonLevels.MULTIPLICATIVE
 }
@@ -42,3 +43,7 @@ operator fun Number.div(divisor: MathObject): MathObject =
 
 operator fun MathObject.div(divisor: Number): MathObject =
     DivCore.compute(this, divisor)
+
+
+operator fun Shape.div(divisor: Shape): Shape =
+    DivCore.computeShape(this, divisor)

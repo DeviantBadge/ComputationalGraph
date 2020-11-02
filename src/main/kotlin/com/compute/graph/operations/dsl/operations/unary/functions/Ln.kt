@@ -6,6 +6,7 @@ import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
 import com.compute.graph.operations.interfaces.core.unary.UNARY_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.types.ScalarConstant
 
 object LnCore : UnaryOperationCorePattern() {
@@ -23,4 +24,7 @@ object LnCore : UnaryOperationCorePattern() {
 
 fun ln(arg: MathObject): MathObject =
     LnCore.computeResult(arg)
+
+fun ln(arg: Shape): Shape =
+    LnCore.computeShape(arg)
 

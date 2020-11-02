@@ -5,6 +5,7 @@ import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
 import com.compute.graph.operations.interfaces.core.unary.UNARY_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.types.ScalarConstant
 import kotlin.math.sin as sin_double
 
@@ -27,3 +28,6 @@ object SinCore : UnaryOperationCorePattern() {
 
 fun sin(arg: MathObject): MathObject =
     SinCore.computeResult(arg)
+
+fun sin(arg: Shape): Shape =
+    SinCore.computeShape(arg)

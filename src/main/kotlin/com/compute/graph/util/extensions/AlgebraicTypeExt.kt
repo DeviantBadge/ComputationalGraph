@@ -12,9 +12,3 @@ fun AlgebraicType.isVector(): Boolean =
 
 fun AlgebraicType.rank(): Int =
     this.shape.rank()
-//
-//fun TensorExpression.canBeVector(): Boolean =
-//    this.rank == null || this.rank == 1
-//
-//fun TensorExpression.canNotBeVector(): Boolean =
-//    this.rank != null && this.rank != 1

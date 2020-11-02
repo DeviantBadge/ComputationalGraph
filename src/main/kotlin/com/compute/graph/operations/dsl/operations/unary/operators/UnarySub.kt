@@ -5,6 +5,7 @@ import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
 import com.compute.graph.operations.interfaces.core.unary.UNARY_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.types.ScalarConstant
 
 object UnarySubCore : UnaryOperationCorePattern() {
@@ -22,3 +23,6 @@ object UnarySubCore : UnaryOperationCorePattern() {
 
 operator fun MathObject.unaryMinus(): MathObject =
     UnarySubCore.computeResult(this)
+
+operator fun Shape.unaryMinus(): Shape =
+    UnarySubCore.computeShape(this)

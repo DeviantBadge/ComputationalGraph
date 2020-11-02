@@ -1,11 +1,15 @@
 package com.compute.graph.util.extensions
 
+import com.compute.graph.operations.builders.contexts.ArgsBuilder
+import com.compute.graph.operations.interfaces.arguments.ComputationArgs
 import com.compute.graph.operations.interfaces.core.binary.LEFT_ARGUMENT_PATTERN
 import com.compute.graph.operations.interfaces.core.binary.RIGHT_ARGUMENT_PATTERN
 import com.compute.graph.operations.interfaces.core.unary.UNARY_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.BinaryOperation
+import com.compute.graph.operations.objects.MathExpression
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.UnaryOperation
+import com.compute.graph.operations.visitors.execution.ComputationVisitor
 
 fun UnaryOperation.compute(argumentValue: MathObject): MathObject =
     specification.computeResult(argumentValue)
@@ -30,3 +34,10 @@ fun BinaryOperation.useStringPattern(leftArgumentString: String, rightArgumentSt
     specification.toStringPattern
         .replace(LEFT_ARGUMENT_PATTERN, leftArgumentString)
         .replace(RIGHT_ARGUMENT_PATTERN, rightArgumentString)
+
+
+fun MathExpression.compute(computationArgs: ComputationArgs): MathObject =
+    ComputationVisitor(this).compute(computationArgs)
+
+fun MathExpression.compute(argsInit: ArgsBuilder.ArgsBuilderContext.() -> Unit): MathObject =
+    ComputationVisitor(this).compute(ArgsBuilder.buildArgs(mutableMapOf(), argsInit))

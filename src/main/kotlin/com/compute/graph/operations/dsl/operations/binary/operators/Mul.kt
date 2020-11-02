@@ -2,10 +2,12 @@ package com.compute.graph.operations.dsl.operations.binary.operators
 
 import com.compute.graph.operations.base.util.BinaryOperationCorePattern
 import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
+import com.compute.graph.operations.interfaces.core.binary.AssociativityType
 import com.compute.graph.operations.interfaces.core.binary.LEFT_ARGUMENT_PATTERN
 import com.compute.graph.operations.interfaces.core.binary.RIGHT_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.Tensor
 import com.compute.graph.operations.objects.types.ScalarConstant
 import com.compute.graph.util.extensions.compute
@@ -32,7 +34,7 @@ object MulCore : BinaryOperationCorePattern() {
     // todo - with some shape conditions this operation is commutative
     override val isCommutative: Boolean = false
     override val isAntiCommutative: Boolean = false
-    override val isAssociative: Boolean = true
+    override val associativityType: AssociativityType = AssociativityType.LEFT
     override val toStringPattern: String = "$LEFT_ARGUMENT_PATTERN*$RIGHT_ARGUMENT_PATTERN"
     override val operationPriority: Int = PriorityCommonLevels.MULTIPLICATIVE
 }
@@ -45,3 +47,7 @@ operator fun Number.times(divisor: MathObject): MathObject =
 
 operator fun MathObject.times(divisor: Number): MathObject =
     MulCore.compute(this, divisor)
+
+
+operator fun Shape.times(divisor: Shape): Shape =
+    MulCore.computeShape(this, divisor)

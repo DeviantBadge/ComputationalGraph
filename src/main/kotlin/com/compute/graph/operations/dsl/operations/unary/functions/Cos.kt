@@ -6,6 +6,7 @@ import com.compute.graph.operations.interfaces.core.PriorityCommonLevels
 import com.compute.graph.operations.interfaces.core.unary.UNARY_ARGUMENT_PATTERN
 import com.compute.graph.operations.objects.MathObject
 import com.compute.graph.operations.objects.Scalar
+import com.compute.graph.operations.objects.Shape
 import com.compute.graph.operations.objects.types.ScalarConstant
 import kotlin.math.cos as cos_double
 
@@ -25,3 +26,6 @@ object CosCore : UnaryOperationCorePattern() {
 
 fun cos(arg: MathObject): MathObject =
     CosCore.computeResult(arg)
+
+fun cos(arg: Shape): Shape =
+    CosCore.computeShape(arg)
